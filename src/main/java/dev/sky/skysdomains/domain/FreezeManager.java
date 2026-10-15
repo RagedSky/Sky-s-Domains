@@ -36,7 +36,9 @@ public final class FreezeManager {
 		if (entity.isRemoved()) return false;
 		if (entity instanceof LivingEntity living && living.isDeadOrDying()) return false;
 		if (entity.level().isClientSide()) {
-			return !CLIENT_FROZEN.isEmpty() && CLIENT_FROZEN.contains(entity.getId());
+			if (CLIENT_FROZEN.isEmpty() || !CLIENT_FROZEN.contains(entity.getId())) return false;
+			snapClient(entity);
+			return true;
 		}
 		Set<Integer> set = SERVER_FROZEN.get(entity.level().dimension());
 		return set != null && set.contains(entity.getId());
@@ -79,6 +81,20 @@ public final class FreezeManager {
 		SERVER_FROZEN.clear();
 	}
 
+	/**
+	 * A frozen client entity skips its tick, so every "previous tick" value used for render
+	 * interpolation (position, rotation, body/head yaw, walk animation) must be pinned to the
+	 * current value, otherwise the entity jitters between old and new state every frame.
+	 */
+	private static void snapClient(Entity entity) {
+		entity.setOldPosAndRot();
+		if (entity instanceof LivingEntity living) {
+			living.yBodyRotO = living.yBodyRot;
+			living.yHeadRotO = living.yHeadRot;
+			living.walkAnimation.update(0.0F, 1.0F, 1.0F);
+		}
+	}
+
 	// --- client side mirror -------------------------------------------------------------
 
 	public static void clientApply(Collection<Integer> ids, boolean frozen) {
@@ -88,6 +104,10 @@ public final class FreezeManager {
 
 	public static void clientClear() {
 		CLIENT_FROZEN.clear();
+	}
+
+	public static boolean isClientFrozen(int entityId) {
+		return !CLIENT_FROZEN.isEmpty() && CLIENT_FROZEN.contains(entityId);
 	}
 
 	public static boolean clientHasFrozen() {

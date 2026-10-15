@@ -7,6 +7,7 @@ import dev.sky.skysdomains.client.animation.SequenceLoader;
 import dev.sky.skysdomains.client.fx.CameraEffects;
 import dev.sky.skysdomains.client.fx.OverlayManager;
 import dev.sky.skysdomains.client.hud.EnergyHud;
+import dev.sky.skysdomains.client.render.DomainLookLayer;
 import dev.sky.skysdomains.common.ModItems;
 import dev.sky.skysdomains.common.SigilItem;
 import dev.sky.skysdomains.common.TalismanItem;
@@ -14,6 +15,7 @@ import dev.sky.skysdomains.common.TalismanStats;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
+import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityRenderLayerRegistrationCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelExtractionEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
@@ -33,8 +35,16 @@ public final class SkysDomainsClient implements ClientModInitializer {
 		ClientTickEvents.END_CLIENT_TICK.register(ClientDomainState::tick);
 		LevelRenderEvents.COLLECT_SUBMITS.register(ClientDomainState::render);
 		LevelExtractionEvents.END_EXTRACTION.register(CameraEffects.get()::afterExtraction);
+		registerEntityLooks();
 
 		registerTooltips();
+	}
+
+	/** Ice shell, glass body and time-freeze glitch on every living entity. */
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	private static void registerEntityLooks() {
+		LivingEntityRenderLayerRegistrationCallback.EVENT.register((entityType, entityRenderer, registrationHelper, context) ->
+				registrationHelper.register(new DomainLookLayer(entityRenderer)));
 	}
 
 	private static void registerTooltips() {

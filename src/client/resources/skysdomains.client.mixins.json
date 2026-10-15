@@ -5,7 +5,8 @@
 	"client": [
 		"ParticleEngineFreezeMixin",
 		"LevelRendererFogSkyMixin",
-		"GameRendererPostEffectMixin"
+		"GameRendererPostEffectMixin",
+		"LivingEntityRendererLookMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
