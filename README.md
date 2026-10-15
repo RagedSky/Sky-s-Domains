@@ -35,6 +35,9 @@ Default activation key: **R** (change it in *Options → Controls → Sky's Doma
 
 ## How to play
 
+Everything below is also explained in game: craft the **Domain Codex** (Book + Arcane Dust), a
+written book with all recipes, drops and domain descriptions in German and English.
+
 1. **Mine the ores.** Arcane Ore (Overworld, Y −64…16, iron pickaxe) drops Arcane Dust; Abyssal Ore
    (Nether, Y 8…100, diamond pickaxe) drops Abyssal Shards; Void Ore (End outer islands, netherite
    pickaxe) drops Void Crystals. Fortune works, Silk Touch gives the block.

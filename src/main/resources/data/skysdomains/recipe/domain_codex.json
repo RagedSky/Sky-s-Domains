@@ -1,0 +1,905 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:book",
+    "skysdomains:arcane_dust"
+  ],
+  "result": {
+    "id": "minecraft:written_book",
+    "components": {
+      "minecraft:item_name": {
+        "translate": "item.skysdomains.domain_codex"
+      },
+      "minecraft:written_book_content": {
+        "title": "Domain Codex",
+        "author": "Sky",
+        "generation": 0,
+        "resolved": true,
+        "pages": [
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.toc",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.toc.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.toc",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": " (2)",
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.toc2.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.toc",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": " (3)",
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.toc3.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.intro.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.intro.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.intro.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": " (2)",
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.intro.body.2"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.activate.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.activate.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.activate.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": " (2)",
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.activate.body.2"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.energy.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.energy.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.energy.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": " (2)",
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.energy.body.2"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.rules.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.rules.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.rules.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": " (2)",
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.rules.body.2"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.ores.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.ores.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.ores.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": " (2)",
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.ores.body.2"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.drops.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.drops.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.core.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.core.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.ink.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.ink.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.ink.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": " (2)",
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.ink.body.2"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.talisman.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.talisman.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.talisman.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": " (2)",
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.talisman.body.2"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.sigil_use.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.sigil_use.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.sigil_use.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": " (2)",
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.sigil_use.body.2"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.sigil_frost.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.sigil_frost.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.sigil_umbral.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.sigil_umbral.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.sigil_glass.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.sigil_glass.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.sigil_ember.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.sigil_ember.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.sigil_stasis.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.sigil_stasis.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.sigil_collapse.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.sigil_collapse.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.tiers.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.tiers.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.tiers.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": " (2)",
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.tiers.body.2"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.tiers.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": " (3)",
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.tiers.body.3"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.templates.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.templates.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.templates.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": " (2)",
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.templates.body.2"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.catalysts.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.catalysts.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.catalysts.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": " (2)",
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.catalysts.body.2"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.upgrades.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.upgrades.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.upgrades.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": " (2)",
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.upgrades.body.2"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.refine.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.refine.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.d_frost.title",
+                "bold": true,
+                "color": "dark_purple"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.d_frost.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.d_frost.title",
+                "bold": true,
+                "color": "dark_purple"
+              },
+              {
+                "text": " (2)",
+                "color": "dark_purple"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.d_frost.body.2"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.d_umbral.title",
+                "bold": true,
+                "color": "dark_purple"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.d_umbral.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.d_glass.title",
+                "bold": true,
+                "color": "dark_purple"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.d_glass.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.d_ember.title",
+                "bold": true,
+                "color": "dark_purple"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.d_ember.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.d_stasis.title",
+                "bold": true,
+                "color": "dark_purple"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.d_stasis.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.d_stasis.title",
+                "bold": true,
+                "color": "dark_purple"
+              },
+              {
+                "text": " (2)",
+                "color": "dark_purple"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.d_stasis.body.2"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.d_collapse.title",
+                "bold": true,
+                "color": "dark_purple"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.d_collapse.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.d_collapse.title",
+                "bold": true,
+                "color": "dark_purple"
+              },
+              {
+                "text": " (2)",
+                "color": "dark_purple"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.d_collapse.body.2"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.collapse_dmg.title",
+                "bold": true,
+                "color": "dark_purple"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.collapse_dmg.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.collapse_dmg.title",
+                "bold": true,
+                "color": "dark_purple"
+              },
+              {
+                "text": " (2)",
+                "color": "dark_purple"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.collapse_dmg.body.2"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.config.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.config.body"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
+                "translate": "book.skysdomains.config.title",
+                "bold": true,
+                "color": "dark_aqua"
+              },
+              {
+                "text": " (2)",
+                "color": "dark_aqua"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.config.body.2"
+              }
+            ]
+          }
+        ]
+      },
+      "minecraft:enchantment_glint_override": true
+    }
+  }
+}
