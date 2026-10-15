@@ -1,0 +1,67 @@
+{
+  "targets": {
+    "swap": {}
+  },
+  "passes": [
+    {
+      "vertex_shader": "minecraft:core/screenquad",
+      "fragment_shader": "skysdomains:post/impact",
+      "inputs": [
+        {
+          "sampler_name": "In",
+          "target": "minecraft:main"
+        }
+      ],
+      "output": "swap",
+      "uniforms": {
+        "ImpactConfig": [
+          {
+            "name": "Threshold",
+            "type": "float",
+            "value": 0.42
+          },
+          {
+            "name": "Invert",
+            "type": "float",
+            "value": 0.0
+          },
+          {
+            "name": "Lines",
+            "type": "float",
+            "value": 1.0
+          },
+          {
+            "name": "Halftone",
+            "type": "float",
+            "value": 0.35
+          }
+        ]
+      }
+    },
+    {
+      "vertex_shader": "minecraft:core/screenquad",
+      "fragment_shader": "minecraft:post/blit",
+      "inputs": [
+        {
+          "sampler_name": "In",
+          "target": "swap"
+        }
+      ],
+      "output": "minecraft:main",
+      "uniforms": {
+        "BlitConfig": [
+          {
+            "name": "ColorModulate",
+            "type": "vec4",
+            "value": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

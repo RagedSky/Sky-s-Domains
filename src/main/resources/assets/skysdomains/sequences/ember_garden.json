@@ -72,6 +72,75 @@
             "scale": 7.0,
             "color": "#FF7A2A",
             "alpha": 0.45
+          },
+          {
+            "type": "particles",
+            "particle": "minecraft:flame",
+            "count": 300,
+            "area": "ground",
+            "speed": 0.15,
+            "spread": 1.0
+          },
+          {
+            "type": "particles",
+            "particle": "minecraft:dust",
+            "count": 200,
+            "area": "ring",
+            "speed": 0.7,
+            "spread": 1.0,
+            "color": "#FF6A20",
+            "size": 2.5
+          },
+          {
+            "type": "particles",
+            "particle": "minecraft:lava",
+            "count": 40,
+            "area": "ground",
+            "speed": 0.3,
+            "spread": 1.0
+          },
+          {
+            "type": "particles",
+            "particle": "minecraft:dust_color_transition",
+            "count": 120,
+            "area": "column",
+            "speed": 0.5,
+            "spread": 2.5,
+            "color": "#FFE080",
+            "color_to": "#FF2000",
+            "size": 2.0
+          }
+        ]
+      },
+      {
+        "tick": 0,
+        "every": 2,
+        "actions": [
+          {
+            "type": "particles",
+            "particle": "minecraft:dust",
+            "count": 25,
+            "area": "spiral",
+            "speed": 0.2,
+            "spread": 3.0,
+            "color": "#FF7A2A",
+            "size": 1.5
+          }
+        ]
+      },
+      {
+        "tick": 1,
+        "every": 3,
+        "actions": [
+          {
+            "type": "particles",
+            "particle": "minecraft:dust",
+            "count": 40,
+            "area": "shell",
+            "speed": 0.08,
+            "spread": 1.0,
+            "color": "#3A0A00",
+            "size": 1.2
           }
         ]
       },
@@ -81,7 +150,8 @@
           {
             "type": "impact_frame",
             "texture": "frame_01",
-            "duration": 2
+            "duration": 2,
+            "style": "bw"
           },
           {
             "type": "flash",
@@ -113,7 +183,8 @@
           {
             "type": "impact_frame",
             "texture": "frame_02",
-            "duration": 2
+            "duration": 2,
+            "style": "invert"
           }
         ]
       },
@@ -122,8 +193,9 @@
         "actions": [
           {
             "type": "impact_frame",
-            "texture": "frame_03",
-            "duration": 2
+            "texture": "frame_04",
+            "duration": 2,
+            "style": "invert"
           },
           {
             "type": "flash",
@@ -152,6 +224,24 @@
             "count": 6,
             "area": "rise",
             "speed": 0.04
+          },
+          {
+            "type": "particles",
+            "particle": "minecraft:dust",
+            "count": 16,
+            "area": "rise",
+            "speed": 0.05,
+            "spread": 1.0,
+            "color": "#FF8A30",
+            "size": 1.4
+          },
+          {
+            "type": "particles",
+            "particle": "minecraft:small_flame",
+            "count": 12,
+            "area": "ground",
+            "speed": 0.03,
+            "spread": 1.0
           }
         ]
       },
@@ -282,7 +372,8 @@
           {
             "type": "impact_frame",
             "texture": "frame_01",
-            "duration": 1
+            "duration": 1,
+            "style": "bw"
           },
           {
             "type": "particles",
@@ -290,6 +381,24 @@
             "count": 80,
             "area": "ground",
             "speed": 0.05
+          },
+          {
+            "type": "particles",
+            "particle": "minecraft:large_smoke",
+            "count": 150,
+            "area": "ground",
+            "speed": 0.1,
+            "spread": 1.0
+          },
+          {
+            "type": "particles",
+            "particle": "minecraft:dust",
+            "count": 200,
+            "area": "implode",
+            "speed": 0.5,
+            "spread": 1.0,
+            "color": "#FF6A20",
+            "size": 2.0
           }
         ]
       }
@@ -347,12 +456,31 @@
       {
         "type": "impact_frame",
         "texture": "frame_02",
-        "duration": 2
+        "duration": 2,
+        "style": "invert"
       },
       {
         "type": "shake",
         "strength": 1.0,
         "duration": 12
+      },
+      {
+        "type": "particles",
+        "particle": "minecraft:dust",
+        "count": 150,
+        "area": "ring",
+        "speed": 1.0,
+        "spread": 1.0,
+        "color": "#FF7A2A",
+        "size": 2.5
+      },
+      {
+        "type": "particles",
+        "particle": "minecraft:flash",
+        "count": 1,
+        "area": "event",
+        "speed": 0,
+        "spread": 0.1
       }
     ]
   }

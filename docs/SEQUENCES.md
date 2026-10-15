@@ -33,7 +33,7 @@
 
 | Type | Fields | Effect |
 |---|---|---|
-| `impact_frame` | `texture` (name under `textures/impact/<domain>/` or a full id), `duration`, `every_nth` | Full-screen PNG for `duration` ticks. |
+| `impact_frame` | `texture` (name under `textures/impact/<domain>/`, a full id, or `none`), `duration`, `every_nth`, `style` | Anime impact frame: `style` turns the live scene into two tones with ink edges and radial speed lines via the `impact_*` post effects (`bw` = black ink on white, `invert` = white on black, `bw_clean` / `invert_clean` = without speed lines, `none` = overlay only), and the transparent PNG is drawn on top with letterbox bars. Frames 01/03/06 are drawn in the domain's ink (use with `bw`), 02/04 in the opposite polarity (use with `invert`), 05 is full art. |
 | `flash` | `color`, `duration` (hold), `fade` | Full-screen colour, then fades out. |
 | `invert` | `duration` | Inverts the screen (post effect; soft flash with reduced flashes). |
 | `post_shader` | `name` (`invert`, `desaturate`, `chromatic`, `radial_blur`, `heat`), `duration` (0 = until the domain ends) | Data-driven post effect. |
@@ -52,7 +52,7 @@
 | `move` | `id`, `pos`, `relative_to_radius`, `to_event`, `scale`, `alpha`, `spin`, `duration`, `easing` | Tweens position / scale / alpha. |
 | `orbit_collapse` | `target`, `duration`, `easing` | Every orbiting object spirals into `target`. |
 | `remove` | `id` (`*` = all) | Removes objects. |
-| `particles` | `particle` (simple vanilla particle id), `count`, `area` (`center`, `ground`, `rise`, `sphere`, `shell`, `event`), `speed`, `spread` | Spawns client particles. |
+| `particles` | `particle` (simple vanilla particle id, or `dust` / `dust_color_transition` / `entity_effect` with `color`, `color_to`, `size`), `count`, `area` (`center`, `ground`, `rise`, `sphere`, `shell`, `event`, `ring`, `column`, `spiral`, `implode`), `speed`, `spread` | Spawns client particles. `ring` = flat ring of radius `spread` around the event flying outwards, `column` = rising pillar at the event, `spiral` = helix around the centre, `implode` = from the shell towards the centre. |
 
 Easings: `linear`, `ease_in_quad`, `ease_out_quad`, `ease_in_out_quad`, `ease_in_cubic`,
 `ease_out_cubic`, `ease_in_out_cubic`, `ease_in_expo`, `ease_out_expo`, `ease_in_out_expo`,

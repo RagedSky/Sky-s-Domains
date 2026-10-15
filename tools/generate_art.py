@@ -388,12 +388,8 @@ def main():
     fh = args.frames
     fw = fh * 16 // 9
 
-    # impact frames
-    for domain, fn in FRAMES.items():
-        for i in range(3):
-            random.seed(100 + i)
-            save(fn(fw, fh, i), 'impact', domain, f'frame_{i + 1:02d}.png')
-        print('frames', domain)
+    # impact frames: 01-04 anime overlays (transparent), 05 full art, 06 crack overlay
+    generate_overlays(fw, fh)
     with open(os.path.join(ROOT, 'impact_frames.json'), 'w') as f:
         json.dump({'width': fw, 'height': fh}, f)
 
@@ -438,6 +434,128 @@ def main():
     ice = shard(S, 2)
     save(ice, 'scene', 'ice_crystal.png')
     print('scene textures done')
+
+
+
+# ============================================================================= anime overlay frames
+# Transparent overlays drawn on top of the two-tone post shader: speed lines, ink splatter, cracks,
+# hatching and flares. Six frames per domain: 01/03 overlays in the domain ink (for the `bw` style),
+# 02/04 in the opposite polarity (for the `invert` style), 05 full art, 06 shatter/crack overlay.
+OVERLAY_COLORS = {
+    'frost_vault': ((20, 40, 60), (120, 230, 255)), 'umbral_sea': ((255, 255, 255), (170, 110, 255)),
+    'glass_heaven': ((70, 50, 10), (255, 215, 110)), 'ember_garden': ((40, 0, 0), (255, 110, 30)),
+    'stasis': ((15, 15, 15), (230, 230, 240)), 'structural_collapse': ((0, 0, 0), (255, 255, 255)),
+}
+
+
+def ov_speed_lines(d, w, h, count, inner_frac, outer_frac, width_range, color, alpha, taper=True):
+    cx, cy = w / 2, h / 2
+    far = math.hypot(w, h) * 0.5
+    for i in range(count):
+        a = i / count * math.tau + random.uniform(-0.6, 0.6) / count
+        r0 = far * inner_frac * random.uniform(0.7, 1.3)
+        r1 = far * outer_frac * random.uniform(0.9, 1.4)
+        wd = random.randint(*width_range)
+        c = color + (int(alpha * random.uniform(0.6, 1.0)),)
+        if taper:
+            # a thin triangle: wide at the rim, sharp towards the centre
+            ax, ay = cx + math.cos(a) * r0, cy + math.sin(a) * r0
+            bx, by = cx + math.cos(a) * r1, cy + math.sin(a) * r1
+            nx, ny = -math.sin(a) * wd, math.cos(a) * wd
+            d.polygon([(ax, ay), (bx + nx, by + ny), (bx - nx, by - ny)], fill=c)
+        else:
+            d.line([(cx + math.cos(a) * r0, cy + math.sin(a) * r0), (cx + math.cos(a) * r1, cy + math.sin(a) * r1)], fill=c, width=wd)
+
+
+def ov_ink_splats(d, w, h, count, size, color, alpha):
+    for _ in range(count):
+        cx, cy = random.uniform(0, w), random.uniform(0, h)
+        pts = []
+        for k in range(14):
+            a = k / 14 * math.tau
+            rr = size * random.uniform(0.4, 1.3)
+            pts.append((cx + math.cos(a) * rr, cy + math.sin(a) * rr * 0.8))
+        d.polygon(pts, fill=color + (alpha,))
+        for _ in range(6):
+            a = random.uniform(0, math.tau)
+            dist = size * random.uniform(1.2, 2.6)
+            rr = size * random.uniform(0.05, 0.25)
+            px, py = cx + math.cos(a) * dist, cy + math.sin(a) * dist
+            d.ellipse([px - rr, py - rr, px + rr, py + rr], fill=color + (alpha,))
+
+
+def ov_hatch(d, w, h, color, alpha, spacing, angle, region):
+    x0, y0, x1, y1 = region
+    c = color + (alpha,)
+    L = max(w, h) * 2
+    for k in range(-L, L, spacing):
+        d.line([(x0 + k, y0), (x0 + k + L * math.cos(angle), y0 + L * math.sin(angle))], fill=c, width=max(1, spacing // 6))
+
+
+def overlay_frame(w, h, domain, variant):
+    ink, accent = OVERLAY_COLORS[domain]
+    # Frames 02 and 04 (variants 1 and 3) use the opposite polarity so they read on an inverted scene.
+    if variant in (1, 3):
+        ink = (255, 255, 255) if sum(ink) < 384 else (10, 10, 10)
+    im = Image.new('RGBA', (w, h), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    random.seed(hash((domain, variant)) & 0xFFFF)
+    if variant == 0:   # sparse heavy lines, clean centre
+        ov_speed_lines(d, w, h, 70, 0.35, 1.1, (3, 10), ink, 230)
+        ov_speed_lines(d, w, h, 30, 0.5, 1.1, (2, 5), accent, 200)
+    elif variant == 1:  # dense thin lines + ink splats in the corners
+        ov_speed_lines(d, w, h, 260, 0.28, 1.1, (1, 4), ink, 210)
+        ov_ink_splats(d, w, h, 10, h * 0.03, ink, 220)
+    elif variant == 2:  # wedge burst + hatching top/bottom
+        ov_speed_lines(d, w, h, 40, 0.15, 1.2, (14, 40), ink, 235)
+        ov_hatch(d, w, h, ink, 150, max(6, h // 120), math.radians(25), (0, 0, w, int(h * 0.18)))
+        ov_hatch(d, w, h, ink, 150, max(6, h // 120), math.radians(-25), (0, int(h * 0.82), w, h))
+    elif variant == 3:  # chaos: everything, accent flare
+        ov_speed_lines(d, w, h, 180, 0.2, 1.2, (2, 12), ink, 240)
+        ov_ink_splats(d, w, h, 24, h * 0.04, ink, 240)
+        ov_speed_lines(d, w, h, 60, 0.3, 1.0, (1, 3), accent, 255, taper=False)
+    # accent glow ring around the centre and soft dark corners
+    glow = Image.new('RGBA', (w, h), (0, 0, 0, 0))
+    gd = ImageDraw.Draw(glow)
+    rr = h * (0.12 + 0.05 * variant)
+    gd.ellipse([w / 2 - rr, h / 2 - rr, w / 2 + rr, h / 2 + rr], outline=accent + (255,), width=max(3, h // 150))
+    glow = glow.filter(ImageFilter.GaussianBlur(h / 90))
+    im = Image.alpha_composite(im, glow)
+    r, _ = radial(h, w)
+    corner = np.clip((r - 0.75) / 0.45, 0, 1) ** 1.5
+    dark = to_img(np.zeros((h, w, 3), np.float32) + np.asarray(ink, np.float32) / 255, corner * 0.85)
+    return Image.alpha_composite(im, dark)
+
+
+def crack_overlay(w, h, domain):
+    ink, accent = OVERLAY_COLORS[domain]
+    random.seed(hash((domain, 'crack')) & 0xFFFF)
+    im = Image.new('RGBA', (w, h), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    crack_walks(d, w, h, 16, 70, h / 32, 12, ink + (255,))
+    glow = im.filter(ImageFilter.GaussianBlur(h / 70))
+    glow = Image.fromarray(np.dstack([np.full((h, w, 3), accent, np.uint8), np.asarray(glow)[..., 3]]), 'RGBA')
+    im = Image.alpha_composite(glow, im)
+    # shards flying away from the centre
+    for _ in range(40):
+        a = random.uniform(0, math.tau)
+        dist = random.uniform(h * 0.15, h * 0.6)
+        cx, cy = w / 2 + math.cos(a) * dist, h / 2 + math.sin(a) * dist
+        s = random.uniform(h * 0.01, h * 0.04)
+        pts = [(cx + math.cos(a + k) * s * random.uniform(0.5, 1.5), cy + math.sin(a + k) * s * random.uniform(0.5, 1.5)) for k in (0, 2.1, 4.2)]
+        d.polygon(pts, fill=accent + (220,), outline=ink + (255,))
+    return im
+
+
+def generate_overlays(fw, fh):
+    for domain in FRAMES:
+        for v in range(4):
+            save(overlay_frame(fw, fh, domain, v), 'impact', domain, f'frame_{v + 1:02d}.png')
+        random.seed(100)
+        save(FRAMES[domain](fw, fh, 1), 'impact', domain, 'frame_05.png')
+        save(crack_overlay(fw, fh, domain), 'impact', domain, 'frame_06.png')
+        print('overlay frames', domain)
+
 
 
 if __name__ == '__main__':

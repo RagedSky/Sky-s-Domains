@@ -52,11 +52,29 @@ public final class OverlayManager {
 		}
 	}
 
+	/** Post-effect id per impact-frame style; null = plain overlay. */
+	private static final UUID FRAME_EFFECT = new UUID(0L, 1L);
+
+	/**
+	 * @param style {@code bw} (scene as black ink on white + speed lines), {@code invert} (white on black),
+	 *              {@code bw_clean} / {@code invert_clean} (no speed lines) or {@code none} (overlay only)
+	 */
+	public void impactFrame(Identifier texture, int ticks, String style) {
+		boolean reduced = ConfigManager.get().accessibility.reducedFlashes;
+		if (reduced) ticks = Math.max(ticks, 4);
+		if (texture != null) frames.add(new Frame(texture, ticks, new int[]{ticks}));
+		String effect = switch (style == null ? "bw" : style) {
+			case "bw" -> reduced ? "impact_bw_clean" : "impact_bw";
+			case "invert" -> reduced ? "impact_bw_clean" : "impact_inverted";
+			case "bw_clean" -> "impact_bw_clean";
+			case "invert_clean" -> reduced ? "impact_bw_clean" : "impact_inverted_clean";
+			default -> null;
+		};
+		if (effect != null) PostEffectManager.get().apply(FRAME_EFFECT, effect, ticks);
+	}
+
 	public void impactFrame(Identifier texture, int ticks) {
-		if (ConfigManager.get().accessibility.reducedFlashes) {
-			ticks = Math.max(ticks, 4);
-		}
-		frames.add(new Frame(texture, ticks, new int[]{ticks}));
+		impactFrame(texture, ticks, "bw");
 	}
 
 	public void flash(int rgb, int hold, int fade) {

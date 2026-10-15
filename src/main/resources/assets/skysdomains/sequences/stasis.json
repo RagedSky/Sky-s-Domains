@@ -63,6 +63,64 @@
             "scale": 4.0,
             "color": "#E0E0E8",
             "alpha": 0.35
+          },
+          {
+            "type": "particles",
+            "particle": "minecraft:dust",
+            "count": 250,
+            "area": "shell",
+            "speed": 0.0,
+            "spread": 1.0,
+            "color": "#D8D8E0",
+            "size": 1.5
+          },
+          {
+            "type": "particles",
+            "particle": "minecraft:white_ash",
+            "count": 120,
+            "area": "ring",
+            "speed": 0.3,
+            "spread": 1.0
+          },
+          {
+            "type": "particles",
+            "particle": "minecraft:end_rod",
+            "count": 40,
+            "area": "column",
+            "speed": 0.2,
+            "spread": 2.0
+          }
+        ]
+      },
+      {
+        "tick": 0,
+        "every": 2,
+        "actions": [
+          {
+            "type": "particles",
+            "particle": "minecraft:dust",
+            "count": 25,
+            "area": "spiral",
+            "speed": 0.2,
+            "spread": 3.0,
+            "color": "#E0E0E8",
+            "size": 1.5
+          }
+        ]
+      },
+      {
+        "tick": 1,
+        "every": 3,
+        "actions": [
+          {
+            "type": "particles",
+            "particle": "minecraft:dust",
+            "count": 40,
+            "area": "shell",
+            "speed": 0.08,
+            "spread": 1.0,
+            "color": "#2A2A2A",
+            "size": 1.2
           }
         ]
       },
@@ -72,7 +130,8 @@
           {
             "type": "impact_frame",
             "texture": "frame_01",
-            "duration": 2
+            "duration": 2,
+            "style": "bw_clean"
           },
           {
             "type": "flash",
@@ -93,8 +152,9 @@
         "actions": [
           {
             "type": "impact_frame",
-            "texture": "frame_02",
-            "duration": 2
+            "texture": "frame_05",
+            "duration": 2,
+            "style": "none"
           }
         ]
       },
@@ -104,7 +164,8 @@
           {
             "type": "impact_frame",
             "texture": "frame_03",
-            "duration": 3
+            "duration": 3,
+            "style": "bw_clean"
           },
           {
             "type": "post_shader",
@@ -148,6 +209,16 @@
             "count": 10,
             "area": "sphere",
             "speed": 0.0
+          },
+          {
+            "type": "particles",
+            "particle": "minecraft:dust",
+            "count": 14,
+            "area": "sphere",
+            "speed": 0.0,
+            "spread": 1.0,
+            "color": "#C8C8D0",
+            "size": 1.0
           }
         ]
       }
@@ -180,13 +251,32 @@
           {
             "type": "impact_frame",
             "texture": "frame_01",
-            "duration": 2
+            "duration": 2,
+            "style": "bw_clean"
           },
           {
             "type": "flash",
             "color": "#FFFFFF",
             "duration": 1,
             "fade": 4
+          },
+          {
+            "type": "particles",
+            "particle": "minecraft:dust",
+            "count": 200,
+            "area": "implode",
+            "speed": 0.6,
+            "spread": 1.0,
+            "color": "#FFFFFF",
+            "size": 2.0
+          },
+          {
+            "type": "particles",
+            "particle": "minecraft:white_ash",
+            "count": 100,
+            "area": "shell",
+            "speed": 0.2,
+            "spread": 1.0
           }
         ]
       },
@@ -252,13 +342,32 @@
       },
       {
         "type": "impact_frame",
-        "texture": "frame_02",
-        "duration": 2
+        "texture": "frame_05",
+        "duration": 2,
+        "style": "none"
       },
       {
         "type": "shake",
         "strength": 0.8,
         "duration": 12
+      },
+      {
+        "type": "particles",
+        "particle": "minecraft:dust",
+        "count": 150,
+        "area": "ring",
+        "speed": 1.0,
+        "spread": 1.0,
+        "color": "#E0E0E8",
+        "size": 2.5
+      },
+      {
+        "type": "particles",
+        "particle": "minecraft:flash",
+        "count": 1,
+        "area": "event",
+        "speed": 0,
+        "spread": 0.1
       }
     ]
   }

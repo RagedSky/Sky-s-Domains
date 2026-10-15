@@ -6,7 +6,11 @@ import com.google.gson.JsonObject;
 import dev.sky.skysdomains.SkysDomains;
 import dev.sky.skysdomains.client.render.SceneObject;
 import dev.sky.skysdomains.common.ModSounds;
+import net.minecraft.core.particles.ColorParticleOption;
+import net.minecraft.core.particles.DustColorTransitionOptions;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -24,7 +28,7 @@ import java.util.Random;
  *
  * <p>Supported types (all fields optional unless noted):
  * <pre>
- * impact_frame   texture*, duration, every_nth
+ * impact_frame   texture* ("none" = shader only), duration, every_nth, style (bw|invert|bw_clean|invert_clean|none)
  * flash          color, duration, fade
  * invert         duration
  * post_shader    name*, duration (0 = until the domain ends)
@@ -43,7 +47,7 @@ import java.util.Random;
  * move           id*, pos, relative_to_radius, scale, alpha, spin, duration, easing, to_event (bool)
  * orbit_collapse target*, duration, easing
  * remove         id* ("*" = all)
- * particles      particle*, count, area (center|ground|sphere|shell|rise|event), speed, spread
+ * particles      particle*, count, area (center|ground|sphere|shell|rise|event|ring|column|spiral|implode), speed, spread, color, color_to, size (dust)
  * </pre>
  */
 public final class Actions {
@@ -89,12 +93,13 @@ public final class Actions {
 		String texture = str(json, "texture", "frame_01");
 		int duration = integer(json, "duration", 2);
 		int everyNth = integer(json, "every_nth", 1);
-		Identifier id = texture.contains(":") ? Identifier.parse(texture)
+		String style = str(json, "style", "bw");
+		Identifier id = "none".equals(texture) ? null : texture.contains(":") ? Identifier.parse(texture)
 				: SkysDomains.id("textures/impact/" + domainId + "/" + texture + ".png");
 		return (ctx, instant) -> {
 			if (instant) return;
 			if (everyNth > 1 && ctx.eventCounter() % everyNth != 0) return;
-			ctx.overlays().impactFrame(id, duration);
+			ctx.overlays().impactFrame(id, duration, style);
 		};
 	}
 
@@ -311,12 +316,14 @@ public final class Actions {
 		String area = str(json, "area", "sphere");
 		float speed = number(json, "speed", 0.02F);
 		float spread = number(json, "spread", 1.0F);
+		int color = color(json, "color", -1);
+		int colorTo = color(json, "color_to", -1);
+		float size = number(json, "size", 1.0F);
 		Identifier particleId = Identifier.parse(particle);
 		return (ctx, instant) -> {
 			if (instant || ctx.client().level == null) return;
-			ParticleType<?> type = BuiltInRegistries.PARTICLE_TYPE.getValue(particleId);
-			if (!(type instanceof SimpleParticleType simple)) return;
-			ParticleOptions options = simple;
+			ParticleOptions options = resolveParticle(particleId, color, colorTo, size);
+			if (options == null) return;
 			Vec3 center = ctx.domain().center;
 			double radius = ctx.domain().radius * ctx.scene().sphereScaleNow();
 			for (int i = 0; i < count; i++) {
@@ -368,6 +375,49 @@ public final class Actions {
 						vy = dir.y * speed;
 						vz = dir.z * speed;
 					}
+					case "ring" -> {
+						// Flat ring of radius `spread` around the event, flying outwards.
+						double angle = (double) i / count * Math.PI * 2 + RANDOM.nextDouble() * 0.2;
+						x = ctx.eventPos().x + Math.cos(angle) * spread;
+						y = ctx.eventPos().y + 0.2 + RANDOM.nextDouble() * 0.4;
+						z = ctx.eventPos().z + Math.sin(angle) * spread;
+						vx = Math.cos(angle) * speed;
+						vy = speed * 0.15;
+						vz = Math.sin(angle) * speed;
+					}
+					case "column" -> {
+						// Vertical pillar of light at the event, rising.
+						double angle = RANDOM.nextDouble() * Math.PI * 2;
+						double dist = RANDOM.nextDouble() * spread * 0.3;
+						x = ctx.eventPos().x + Math.cos(angle) * dist;
+						y = ctx.eventPos().y + RANDOM.nextDouble() * spread * 2.5;
+						z = ctx.eventPos().z + Math.sin(angle) * dist;
+						vx = 0;
+						vz = 0;
+						vy = speed + RANDOM.nextDouble() * speed;
+					}
+					case "spiral" -> {
+						// Helix around the centre axis, used for activation vortices.
+						double t = (double) i / count;
+						double angle = t * Math.PI * 6 + ctx.domain().phaseAge * 0.3;
+						double dist = spread * (0.3 + 0.7 * t);
+						x = center.x + Math.cos(angle) * dist;
+						y = center.y + t * spread * 1.5;
+						z = center.z + Math.sin(angle) * dist;
+						vx = -Math.sin(angle) * speed;
+						vy = speed * 0.5;
+						vz = Math.cos(angle) * speed;
+					}
+					case "implode" -> {
+						// Particles on the shell flying towards the centre.
+						Vec3 dir = randomDirection();
+						x = center.x + dir.x * radius;
+						y = center.y + dir.y * radius;
+						z = center.z + dir.z * radius;
+						vx = -dir.x * speed;
+						vy = -dir.y * speed;
+						vz = -dir.z * speed;
+					}
 					default -> {
 						Vec3 dir = randomDirection();
 						double distance = Math.cbrt(RANDOM.nextDouble()) * radius;
@@ -379,6 +429,23 @@ public final class Actions {
 				ctx.client().level.addParticle(options, x, y, z, vx, vy, vz);
 			}
 		};
+	}
+
+	/** Simple particle types as-is; {@code dust} / {@code dust_color_transition} with colour and size. */
+	@Nullable
+	private static ParticleOptions resolveParticle(Identifier id, int color, int colorTo, float size) {
+		ParticleType<?> type = BuiltInRegistries.PARTICLE_TYPE.getValue(id);
+		if (type == ParticleTypes.DUST) {
+			return new DustParticleOptions(color < 0 ? 0xFFFFFF : color, size);
+		}
+		if (type == ParticleTypes.DUST_COLOR_TRANSITION) {
+			int from = color < 0 ? 0xFFFFFF : color;
+			return new DustColorTransitionOptions(from, colorTo < 0 ? from : colorTo, size);
+		}
+		if (type == ParticleTypes.ENTITY_EFFECT) {
+			return ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, 0xFF000000 | (color < 0 ? 0xFFFFFF : color));
+		}
+		return type instanceof SimpleParticleType simple ? simple : null;
 	}
 
 	private static Vec3 randomDirection() {

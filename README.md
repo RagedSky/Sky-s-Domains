@@ -131,7 +131,9 @@ no-op). The full reference with all fields is in [docs/SEQUENCES.md](docs/SEQUEN
 
 ## Assets
 
-Impact frames (2560×1440) and scene textures (1024×512 sphere skins, 512px planets and sprites)
+Impact frames are real anime impact frames: a post shader turns the live scene into two tones with ink
+edges and flickering speed lines, and transparent 2560×1440 overlays (speed lines, ink splatter, cracks)
+are drawn on top. Overlays and scene textures (1024×512 sphere skins, 512px planets and sprites)
 are procedurally rendered by `tools/generate_art.py` (`--frames 2160` produces true 4K frames at
 about four times the jar size and VRAM). Item and block icons come from
 `tools/generate_placeholders.py`. [docs/ASSETS.md](docs/ASSETS.md) lists each path so you can
