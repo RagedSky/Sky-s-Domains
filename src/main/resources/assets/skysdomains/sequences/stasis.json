@@ -53,6 +53,16 @@
             "id": "clock",
             "scale": 0.5,
             "duration": 1
+          },
+          {
+            "type": "spawn",
+            "id": "clock_glow",
+            "kind": "billboard",
+            "texture": "skysdomains:scene/glow_soft",
+            "follow": "clock",
+            "scale": 4.0,
+            "color": "#E0E0E8",
+            "alpha": 0.35
           }
         ]
       },
@@ -118,6 +128,11 @@
             "id": "skysdomains:stasis.impact",
             "volume": 1.2,
             "pitch": 0.5
+          },
+          {
+            "type": "post_shader",
+            "name": "chromatic",
+            "duration": 4
           }
         ]
       }
@@ -188,6 +203,53 @@
   },
   "events": {
     "clash": [
+      {
+        "type": "spawn",
+        "id": "shock",
+        "kind": "ring",
+        "texture": "skysdomains:scene/shockwave",
+        "at_event": true,
+        "pos": [
+          0,
+          0.5,
+          0
+        ],
+        "scale": 0.5,
+        "color": "#E8E8E8",
+        "alpha": 1.0,
+        "tilt": 90
+      },
+      {
+        "type": "move",
+        "id": "shock",
+        "scale": 9.0,
+        "alpha": 0.0,
+        "duration": 14,
+        "easing": "ease_out_cubic"
+      },
+      {
+        "type": "spawn",
+        "id": "flash",
+        "kind": "billboard",
+        "texture": "skysdomains:scene/flash_white",
+        "at_event": true,
+        "pos": [
+          0,
+          0.8,
+          0
+        ],
+        "scale": 2.5,
+        "color": "#E8E8E8",
+        "alpha": 1.0
+      },
+      {
+        "type": "move",
+        "id": "flash",
+        "scale": 0.2,
+        "alpha": 0.0,
+        "duration": 6,
+        "easing": "ease_out_quad"
+      },
       {
         "type": "impact_frame",
         "texture": "frame_02",

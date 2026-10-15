@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Generates every placeholder texture of Sky's Domains.
+"""Generates the 16x16 item/block placeholder icons of Sky's Domains.
+
+High-resolution impact frames and scene textures come from tools/generate_art.py; this script
+only writes them when they are missing (--all forces everything).
 
 Run from the repository root:  python3 tools/generate_placeholders.py
 All outputs are plain PNGs under src/main/resources/assets/skysdomains/textures and can be
@@ -188,6 +191,12 @@ for name, spec in items.items():
     accent = spec[2] if len(spec) > 2 else None
     save(item_icon(16, color, shape, accent, glow=name in ('echoed_matter', 'void_crystal', 'transcendent_talisman')), 'item', name + '.png')
 
+import sys
+FORCE = '--all' in sys.argv
+if FORCE or not os.path.exists(os.path.join(TEX, 'scene', 'sun.png')):
+  pass
+else:
+  print('scene/impact textures exist (generate_art.py) - skipping'); raise SystemExit
 # ------------------------------------------------------------------ scene (stitched into the block atlas)
 save(sphere_texture(64, (120, 120, 160), (220, 220, 255), 255), 'scene', 'sphere_default.png')
 save(sphere_texture(64, (150, 210, 255), (255, 255, 255), 255, crackle=True), 'scene', 'sphere_frost_vault.png')

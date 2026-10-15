@@ -22,9 +22,11 @@ import java.util.UUID;
 public final class OverlayManager {
 	private static final OverlayManager INSTANCE = new OverlayManager();
 
-	/** Impact frame textures are 256x144 placeholders, scaled to the screen. */
-	private static final int FRAME_WIDTH = 256;
-	private static final int FRAME_HEIGHT = 144;
+	/** Impact frame texture size (16:9), read from {@code assets/skysdomains/impact_frames.json} on reload. */
+	private static int frameWidth = 2560;
+	private static int frameHeight = 1440;
+	/** Cinematic black bars while an impact frame is shown (fraction of the screen height per bar). */
+	private static final float LETTERBOX = 0.07F;
 
 	private record Frame(Identifier texture, int total, int[] remaining) {
 	}
@@ -41,6 +43,13 @@ public final class OverlayManager {
 
 	public static OverlayManager get() {
 		return INSTANCE;
+	}
+
+	public static void setFrameSize(int width, int height) {
+		if (width > 0 && height > 0) {
+			frameWidth = width;
+			frameHeight = height;
+		}
 	}
 
 	public void impactFrame(Identifier texture, int ticks) {
@@ -117,14 +126,22 @@ public final class OverlayManager {
 		}
 
 		for (Frame frame : frames) {
+			// Keep the 16:9 frame's aspect ratio: cover the screen, crop the overflow.
+			float scale = Math.max((float) width / frameWidth, (float) height / frameHeight);
+			float drawW = frameWidth * scale;
+			float drawH = frameHeight * scale;
 			graphics.pose().pushMatrix();
-			graphics.pose().scale((float) width / FRAME_WIDTH, (float) height / FRAME_HEIGHT);
-			graphics.blit(RenderPipelines.GUI_TEXTURED, frame.texture(), 0, 0, 0.0F, 0.0F, FRAME_WIDTH, FRAME_HEIGHT, FRAME_WIDTH, FRAME_HEIGHT);
+			graphics.pose().translate((width - drawW) / 2.0F, (height - drawH) / 2.0F);
+			graphics.pose().scale(scale, scale);
+			graphics.blit(RenderPipelines.GUI_TEXTURED, frame.texture(), 0, 0, 0.0F, 0.0F, frameWidth, frameHeight, frameWidth, frameHeight);
 			graphics.pose().popMatrix();
 			if (reduced) {
 				// Soften the hard frame with a semi-transparent black layer.
 				graphics.fill(0, 0, width, height, ARGB.color(90, 0x000000));
 			}
+			int bar = Math.round(height * LETTERBOX);
+			graphics.fill(0, 0, width, bar, 0xFF000000);
+			graphics.fill(0, height - bar, width, height, 0xFF000000);
 		}
 	}
 

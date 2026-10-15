@@ -1,68 +1,454 @@
 {
   "_comment": "Glass Heaven: floating glass shards, white-gold sky, light refraction on the sphere, shattering-glass impact frames, bright bell sounds.",
-  "sphere": {"texture": "skysdomains:scene/sphere_glass_heaven", "color": "#FFF6DC", "alpha": 0.3, "inside_alpha": 0.4, "scroll": 0.012, "emissive": true},
+  "sphere": {
+    "texture": "skysdomains:scene/sphere_glass_heaven",
+    "color": "#FFF6DC",
+    "alpha": 0.3,
+    "inside_alpha": 0.4,
+    "scroll": 0.012,
+    "emissive": true
+  },
   "phases": {
     "open": [
-      {"tick": 0, "actions": [
-        {"type": "audio_duck", "duration": 40, "level": 0.25},
-        {"type": "sound", "id": "skysdomains:glass_heaven.open", "volume": 1.4, "pitch": 1.1, "at": "center"},
-        {"type": "sphere_scale", "from": 0.0, "to": 1.0, "duration": 30, "easing": "ease_out_expo"},
-        {"type": "fog", "color": "#FFF4D6", "density": 0.55},
-        {"type": "sky", "id": "none"},
-        {"type": "fov_punch", "delta": 6, "duration": 14, "easing": "ease_out_expo"},
-        {"type": "particles", "particle": "minecraft:end_rod", "count": 80, "area": "shell", "speed": 0.05},
-        {"type": "spawn", "id": "shard_1", "kind": "billboard", "texture": "skysdomains:scene/glass_shard", "pos": [0.0, 0.3, 0.0], "scale": 0.6, "alpha": 0.9, "spin": 1.5},
-        {"type": "spawn", "id": "shard_2", "kind": "billboard", "texture": "skysdomains:scene/glass_shard", "pos": [0.0, 0.5, 0.0], "scale": 0.5, "alpha": 0.9, "spin": -2.0},
-        {"type": "spawn", "id": "shard_3", "kind": "billboard", "texture": "skysdomains:scene/glass_shard", "pos": [0.0, 0.2, 0.0], "scale": 0.7, "alpha": 0.9, "spin": 1.0},
-        {"type": "spawn", "id": "shard_4", "kind": "billboard", "texture": "skysdomains:scene/glass_shard", "pos": [0.0, 0.6, 0.0], "scale": 0.45, "alpha": 0.9, "spin": -1.2},
-        {"type": "spawn", "id": "shard_5", "kind": "billboard", "texture": "skysdomains:scene/glass_shard", "pos": [0.0, 0.4, 0.0], "scale": 0.55, "alpha": 0.9, "spin": 2.5},
-        {"type": "spawn", "id": "anchor", "kind": "billboard", "texture": "skysdomains:scene/flash_white", "pos": [0.0, 0.35, 0.0], "relative_to_radius": true, "scale": 0.0, "alpha": 0.0}
-      ]},
-      {"tick": 1, "actions": [
-        {"type": "orbit", "id": "shard_1", "around": "anchor", "radius": 0.55, "relative_to_radius": true, "period": 160, "phase": 0.0, "tilt": 15},
-        {"type": "orbit", "id": "shard_2", "around": "anchor", "radius": 0.4, "relative_to_radius": true, "period": 120, "phase": 0.3, "tilt": -20},
-        {"type": "orbit", "id": "shard_3", "around": "anchor", "radius": 0.7, "relative_to_radius": true, "period": 200, "phase": 0.6, "tilt": 35},
-        {"type": "orbit", "id": "shard_4", "around": "anchor", "radius": 0.3, "relative_to_radius": true, "period": 90, "phase": 0.8, "tilt": -40},
-        {"type": "orbit", "id": "shard_5", "around": "anchor", "radius": 0.6, "relative_to_radius": true, "period": 140, "phase": 0.45, "tilt": 5}
-      ]},
-      {"tick": 5, "actions": [
-        {"type": "impact_frame", "texture": "frame_01", "duration": 2},
-        {"type": "flash", "color": "#FFFFFF", "duration": 1, "fade": 4},
-        {"type": "sound", "id": "skysdomains:glass_heaven.impact", "volume": 1.0, "pitch": 1.3}
-      ]},
-      {"tick": 16, "actions": [
-        {"type": "impact_frame", "texture": "frame_02", "duration": 2},
-        {"type": "sound", "id": "skysdomains:glass_heaven.impact", "volume": 0.9, "pitch": 1.6}
-      ]}
+      {
+        "tick": 0,
+        "actions": [
+          {
+            "type": "audio_duck",
+            "duration": 40,
+            "level": 0.25
+          },
+          {
+            "type": "sound",
+            "id": "skysdomains:glass_heaven.open",
+            "volume": 1.4,
+            "pitch": 1.1,
+            "at": "center"
+          },
+          {
+            "type": "sphere_scale",
+            "from": 0.0,
+            "to": 1.0,
+            "duration": 30,
+            "easing": "ease_out_expo"
+          },
+          {
+            "type": "fog",
+            "color": "#FFF4D6",
+            "density": 0.55
+          },
+          {
+            "type": "sky",
+            "id": "none"
+          },
+          {
+            "type": "fov_punch",
+            "delta": 6,
+            "duration": 14,
+            "easing": "ease_out_expo"
+          },
+          {
+            "type": "particles",
+            "particle": "minecraft:end_rod",
+            "count": 80,
+            "area": "shell",
+            "speed": 0.05
+          },
+          {
+            "type": "spawn",
+            "id": "shard_1",
+            "kind": "billboard",
+            "texture": "skysdomains:scene/glass_shard",
+            "pos": [
+              0.0,
+              0.3,
+              0.0
+            ],
+            "scale": 0.6,
+            "alpha": 0.9,
+            "spin": 1.5
+          },
+          {
+            "type": "spawn",
+            "id": "shard_2",
+            "kind": "billboard",
+            "texture": "skysdomains:scene/glass_shard",
+            "pos": [
+              0.0,
+              0.5,
+              0.0
+            ],
+            "scale": 0.5,
+            "alpha": 0.9,
+            "spin": -2.0
+          },
+          {
+            "type": "spawn",
+            "id": "shard_3",
+            "kind": "billboard",
+            "texture": "skysdomains:scene/glass_shard",
+            "pos": [
+              0.0,
+              0.2,
+              0.0
+            ],
+            "scale": 0.7,
+            "alpha": 0.9,
+            "spin": 1.0
+          },
+          {
+            "type": "spawn",
+            "id": "shard_4",
+            "kind": "billboard",
+            "texture": "skysdomains:scene/glass_shard",
+            "pos": [
+              0.0,
+              0.6,
+              0.0
+            ],
+            "scale": 0.45,
+            "alpha": 0.9,
+            "spin": -1.2
+          },
+          {
+            "type": "spawn",
+            "id": "shard_5",
+            "kind": "billboard",
+            "texture": "skysdomains:scene/glass_shard",
+            "pos": [
+              0.0,
+              0.4,
+              0.0
+            ],
+            "scale": 0.55,
+            "alpha": 0.9,
+            "spin": 2.5
+          },
+          {
+            "type": "spawn",
+            "id": "anchor",
+            "kind": "billboard",
+            "texture": "skysdomains:scene/flash_white",
+            "pos": [
+              0.0,
+              0.35,
+              0.0
+            ],
+            "relative_to_radius": true,
+            "scale": 0.0,
+            "alpha": 0.0
+          },
+          {
+            "type": "spawn",
+            "id": "halo",
+            "kind": "billboard",
+            "texture": "skysdomains:scene/glow_soft",
+            "pos": [
+              0,
+              0.35,
+              0
+            ],
+            "relative_to_radius": true,
+            "scale": 7.0,
+            "color": "#FFF0C0",
+            "alpha": 0.35
+          }
+        ]
+      },
+      {
+        "tick": 1,
+        "actions": [
+          {
+            "type": "orbit",
+            "id": "shard_1",
+            "around": "anchor",
+            "radius": 0.55,
+            "relative_to_radius": true,
+            "period": 160,
+            "phase": 0.0,
+            "tilt": 15
+          },
+          {
+            "type": "orbit",
+            "id": "shard_2",
+            "around": "anchor",
+            "radius": 0.4,
+            "relative_to_radius": true,
+            "period": 120,
+            "phase": 0.3,
+            "tilt": -20
+          },
+          {
+            "type": "orbit",
+            "id": "shard_3",
+            "around": "anchor",
+            "radius": 0.7,
+            "relative_to_radius": true,
+            "period": 200,
+            "phase": 0.6,
+            "tilt": 35
+          },
+          {
+            "type": "orbit",
+            "id": "shard_4",
+            "around": "anchor",
+            "radius": 0.3,
+            "relative_to_radius": true,
+            "period": 90,
+            "phase": 0.8,
+            "tilt": -40
+          },
+          {
+            "type": "orbit",
+            "id": "shard_5",
+            "around": "anchor",
+            "radius": 0.6,
+            "relative_to_radius": true,
+            "period": 140,
+            "phase": 0.45,
+            "tilt": 5
+          }
+        ]
+      },
+      {
+        "tick": 5,
+        "actions": [
+          {
+            "type": "impact_frame",
+            "texture": "frame_01",
+            "duration": 2
+          },
+          {
+            "type": "flash",
+            "color": "#FFFFFF",
+            "duration": 1,
+            "fade": 4
+          },
+          {
+            "type": "sound",
+            "id": "skysdomains:glass_heaven.impact",
+            "volume": 1.0,
+            "pitch": 1.3
+          },
+          {
+            "type": "post_shader",
+            "name": "chromatic",
+            "duration": 8
+          }
+        ]
+      },
+      {
+        "tick": 16,
+        "actions": [
+          {
+            "type": "impact_frame",
+            "texture": "frame_02",
+            "duration": 2
+          },
+          {
+            "type": "sound",
+            "id": "skysdomains:glass_heaven.impact",
+            "volume": 0.9,
+            "pitch": 1.6
+          }
+        ]
+      }
     ],
     "active": [
-      {"tick": 0, "every": 8, "actions": [
-        {"type": "particles", "particle": "minecraft:end_rod", "count": 6, "area": "sphere", "speed": 0.01}
-      ]},
-      {"tick": 0, "every": 70, "actions": [
-        {"type": "sound", "id": "skysdomains:glass_heaven.loop", "volume": 0.7, "pitch": 1.0, "at": "center"}
-      ]}
+      {
+        "tick": 0,
+        "every": 8,
+        "actions": [
+          {
+            "type": "particles",
+            "particle": "minecraft:end_rod",
+            "count": 6,
+            "area": "sphere",
+            "speed": 0.01
+          }
+        ]
+      },
+      {
+        "tick": 0,
+        "every": 70,
+        "actions": [
+          {
+            "type": "sound",
+            "id": "skysdomains:glass_heaven.loop",
+            "volume": 0.7,
+            "pitch": 1.0,
+            "at": "center"
+          }
+        ]
+      }
     ],
     "close": [
-      {"tick": 0, "actions": [
-        {"type": "sound", "id": "skysdomains:glass_heaven.close", "volume": 1.2, "pitch": 0.9},
-        {"type": "sphere_scale", "from": 1.0, "to": 0.0, "duration": 18, "easing": "ease_in_cubic"},
-        {"type": "remove", "id": "*"},
-        {"type": "fog", "reset": true},
-        {"type": "sky", "id": "default"},
-        {"type": "impact_frame", "texture": "frame_03", "duration": 2},
-        {"type": "particles", "particle": "minecraft:end_rod", "count": 100, "area": "shell", "speed": 0.12}
-      ]}
+      {
+        "tick": 0,
+        "actions": [
+          {
+            "type": "sound",
+            "id": "skysdomains:glass_heaven.close",
+            "volume": 1.2,
+            "pitch": 0.9
+          },
+          {
+            "type": "sphere_scale",
+            "from": 1.0,
+            "to": 0.0,
+            "duration": 18,
+            "easing": "ease_in_cubic"
+          },
+          {
+            "type": "remove",
+            "id": "*"
+          },
+          {
+            "type": "fog",
+            "reset": true
+          },
+          {
+            "type": "sky",
+            "id": "default"
+          },
+          {
+            "type": "impact_frame",
+            "texture": "frame_03",
+            "duration": 2
+          },
+          {
+            "type": "particles",
+            "particle": "minecraft:end_rod",
+            "count": 100,
+            "area": "shell",
+            "speed": 0.12
+          }
+        ]
+      }
     ]
   },
   "events": {
     "shatter": [
-      {"type": "particles", "particle": "minecraft:end_rod", "count": 16, "area": "event", "spread": 0.8, "speed": 0.25},
-      {"type": "flash", "color": "#FFFBE8", "duration": 1, "fade": 2}
+      {
+        "type": "spawn",
+        "id": "shock",
+        "kind": "ring",
+        "texture": "skysdomains:scene/shockwave",
+        "at_event": true,
+        "pos": [
+          0,
+          0.5,
+          0
+        ],
+        "scale": 0.5,
+        "color": "#FFF4D0",
+        "alpha": 1.0,
+        "tilt": 90
+      },
+      {
+        "type": "move",
+        "id": "shock",
+        "scale": 2.5,
+        "alpha": 0.0,
+        "duration": 8,
+        "easing": "ease_out_cubic"
+      },
+      {
+        "type": "spawn",
+        "id": "flash",
+        "kind": "billboard",
+        "texture": "skysdomains:scene/flash_white",
+        "at_event": true,
+        "pos": [
+          0,
+          0.8,
+          0
+        ],
+        "scale": 2.5,
+        "color": "#FFF4D0",
+        "alpha": 1.0
+      },
+      {
+        "type": "move",
+        "id": "flash",
+        "scale": 0.2,
+        "alpha": 0.0,
+        "duration": 6,
+        "easing": "ease_out_quad"
+      },
+      {
+        "type": "particles",
+        "particle": "minecraft:end_rod",
+        "count": 16,
+        "area": "event",
+        "spread": 0.8,
+        "speed": 0.25
+      },
+      {
+        "type": "flash",
+        "color": "#FFFBE8",
+        "duration": 1,
+        "fade": 2
+      }
     ],
     "clash": [
-      {"type": "impact_frame", "texture": "frame_02", "duration": 2},
-      {"type": "shake", "strength": 0.8, "duration": 12}
+      {
+        "type": "spawn",
+        "id": "shock",
+        "kind": "ring",
+        "texture": "skysdomains:scene/shockwave",
+        "at_event": true,
+        "pos": [
+          0,
+          0.5,
+          0
+        ],
+        "scale": 0.5,
+        "color": "#FFE8A0",
+        "alpha": 1.0,
+        "tilt": 90
+      },
+      {
+        "type": "move",
+        "id": "shock",
+        "scale": 9.0,
+        "alpha": 0.0,
+        "duration": 14,
+        "easing": "ease_out_cubic"
+      },
+      {
+        "type": "spawn",
+        "id": "flash",
+        "kind": "billboard",
+        "texture": "skysdomains:scene/flash_white",
+        "at_event": true,
+        "pos": [
+          0,
+          0.8,
+          0
+        ],
+        "scale": 2.5,
+        "color": "#FFE8A0",
+        "alpha": 1.0
+      },
+      {
+        "type": "move",
+        "id": "flash",
+        "scale": 0.2,
+        "alpha": 0.0,
+        "duration": 6,
+        "easing": "ease_out_quad"
+      },
+      {
+        "type": "impact_frame",
+        "texture": "frame_02",
+        "duration": 2
+      },
+      {
+        "type": "shake",
+        "strength": 0.8,
+        "duration": 12
+      }
     ]
   }
 }

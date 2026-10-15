@@ -47,7 +47,7 @@
 | `fog` | `color`, `density` or `reset: true` | Tints the vanilla fog colour and adds a screen tint; reset removes it. |
 | `sky` | `id` (`none`, `space`, `default`) | `none`/`space` suppress the vanilla sky (the sphere wall shows the backdrop); `default` restores it. |
 | `vignette` | `strength`, `duration` (0 = until the domain ends) | Dark screen edges. |
-| `spawn` | `id`, `kind` (`sphere`, `billboard`, `ring`), `texture`, `pos`, `relative_to_radius`, `scale`, `color`, `alpha`, `spin` (deg/tick), `tilt`, `emissive`, `only_if_planet`, `ring {texture, scale, tilt, alpha}` | Creates a scene object. `only_if_planet: n` skips it when the domain throws fewer than n+1 planets. |
+| `spawn` | `id`, `kind` (`sphere`, `billboard`, `ring`), `texture`, `pos`, `relative_to_radius`, `at_event` (pos is relative to the event position), `follow` (object id to stick to) + `offset`, `lit_by` (object id used as light source for lambert shading of spheres), `scale`, `color`, `alpha`, `spin` (deg/tick), `tilt`, `emissive`, `only_if_planet`, `ring {texture, scale, tilt, alpha}` | Creates a scene object. `only_if_planet: n` skips it when the domain throws fewer than n+1 planets. |
 | `orbit` | `id`, `around`, `radius`, `relative_to_radius`, `period` (ticks), `phase` (0–1), `tilt` | Object orbits another object. |
 | `move` | `id`, `pos`, `relative_to_radius`, `to_event`, `scale`, `alpha`, `spin`, `duration`, `easing` | Tweens position / scale / alpha. |
 | `orbit_collapse` | `target`, `duration`, `easing` | Every orbiting object spirals into `target`. |

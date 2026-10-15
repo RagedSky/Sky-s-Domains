@@ -38,7 +38,7 @@ import java.util.Random;
  * fog            color, density, reset
  * sky            id (space|none|default)
  * vignette       strength, duration
- * spawn          id*, kind (sphere|billboard|ring), texture*, pos, relative_to_radius, scale, color, alpha, spin, tilt, emissive, only_if_planet, ring{texture,scale,tilt,alpha}
+ * spawn          id*, kind (sphere|billboard|ring), texture*, pos, relative_to_radius, at_event, follow, offset, lit_by, scale, color, alpha, spin, tilt, emissive, only_if_planet, ring{texture,scale,tilt,alpha}
  * orbit          id*, around*, radius, relative_to_radius, period, phase, tilt
  * move           id*, pos, relative_to_radius, scale, alpha, spin, duration, easing, to_event (bool)
  * orbit_collapse target*, duration, easing
@@ -222,12 +222,22 @@ public final class Actions {
 		boolean emissive = !json.has("emissive") || json.get("emissive").getAsBoolean();
 		int onlyIfPlanet = integer(json, "only_if_planet", -1);
 		boolean relative = bool(json, "relative_to_radius", false);
+		boolean atEvent = bool(json, "at_event", false);
+		@Nullable String follow = json.has("follow") ? str(json, "follow", null) : null;
+		Vec3 offset = vec3(json, "offset", Vec3.ZERO);
+		@Nullable String litBy = json.has("lit_by") ? str(json, "lit_by", null) : null;
 		@Nullable JsonObject ring = json.has("ring") ? json.getAsJsonObject("ring") : null;
 		return (ctx, instant) -> {
 			if (onlyIfPlanet >= 0 && onlyIfPlanet >= ctx.domain().planets) return;
+			if (follow != null && ctx.scene().get(follow) == null) return;
 			SceneObject object = ctx.scene().spawn(id, kind, texture);
-			object.pos = relative ? pos.scale(ctx.domain().radius) : pos;
+			Vec3 base = relative ? pos.scale(ctx.domain().radius) : pos;
+			if (atEvent) base = ctx.eventPos().subtract(ctx.domain().center).add(base);
+			object.pos = base;
 			object.prevPos = object.pos;
+			object.followId = follow;
+			object.followOffset = offset;
+			object.litBy = litBy;
 			object.scale = scale;
 			object.color = color;
 			object.alpha = alpha;

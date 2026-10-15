@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import dev.sky.skysdomains.DomainType;
 import dev.sky.skysdomains.SkysDomains;
+import dev.sky.skysdomains.client.fx.OverlayManager;
 import dev.sky.skysdomains.client.render.DomainSprites;
 import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
 import net.minecraft.resources.Identifier;
@@ -47,6 +48,7 @@ public final class SequenceLoader {
 	private static void load(ResourceManager manager) {
 		SEQUENCES.clear();
 		DomainSprites.invalidate();
+		loadFrameSize(manager);
 		for (DomainType type : DomainType.values()) {
 			Identifier id = SkysDomains.id("sequences/" + type.id() + ".json");
 			Optional<Resource> resource = manager.getResource(id);
@@ -62,6 +64,17 @@ public final class SequenceLoader {
 			}
 		}
 		SkysDomains.LOGGER.info("Loaded {} domain sequences", SEQUENCES.size());
+	}
+
+	private static void loadFrameSize(ResourceManager manager) {
+		Optional<Resource> resource = manager.getResource(SkysDomains.id("impact_frames.json"));
+		if (resource.isEmpty()) return;
+		try (Reader reader = new InputStreamReader(resource.get().open(), StandardCharsets.UTF_8)) {
+			JsonObject json = JsonParser.parseReader(reader).getAsJsonObject();
+			OverlayManager.setFrameSize(Actions.integer(json, "width", 2560), Actions.integer(json, "height", 1440));
+		} catch (Exception e) {
+			SkysDomains.LOGGER.warn("Could not read impact_frames.json", e);
+		}
 	}
 
 	static Sequence parse(JsonObject json, String domainId) {

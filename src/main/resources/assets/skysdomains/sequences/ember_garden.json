@@ -1,68 +1,359 @@
 {
   "_comment": "Ember Garden: glowing petals rise, orange-red sky, heat shimmer post shader, red/black flame impact frames, crackling sounds.",
-  "sphere": {"texture": "skysdomains:scene/sphere_ember_garden", "color": "#FF9A4A", "alpha": 0.3, "inside_alpha": 0.4, "scroll": 0.02, "emissive": true},
+  "sphere": {
+    "texture": "skysdomains:scene/sphere_ember_garden",
+    "color": "#FF9A4A",
+    "alpha": 0.3,
+    "inside_alpha": 0.4,
+    "scroll": 0.02,
+    "emissive": true
+  },
   "phases": {
     "open": [
-      {"tick": 0, "actions": [
-        {"type": "audio_duck", "duration": 40, "level": 0.2},
-        {"type": "sound", "id": "skysdomains:ember_garden.open", "volume": 1.5, "pitch": 0.9, "at": "center"},
-        {"type": "sphere_scale", "from": 0.0, "to": 1.0, "duration": 30, "easing": "ease_out_expo"},
-        {"type": "fog", "color": "#FF5A1E", "density": 0.6},
-        {"type": "sky", "id": "none"},
-        {"type": "post_shader", "name": "heat", "duration": 0},
-        {"type": "fov_punch", "delta": 9, "duration": 12, "easing": "ease_out_expo"},
-        {"type": "particles", "particle": "minecraft:flame", "count": 150, "area": "ground", "speed": 0.08}
-      ]},
-      {"tick": 5, "actions": [
-        {"type": "impact_frame", "texture": "frame_01", "duration": 2},
-        {"type": "flash", "color": "#FF4A1A", "duration": 1, "fade": 3},
-        {"type": "shake", "strength": 0.6, "duration": 10},
-        {"type": "sound", "id": "skysdomains:ember_garden.impact", "volume": 1.2, "pitch": 0.8}
-      ]},
-      {"tick": 15, "actions": [
-        {"type": "impact_frame", "texture": "frame_02", "duration": 2}
-      ]},
-      {"tick": 25, "actions": [
-        {"type": "impact_frame", "texture": "frame_03", "duration": 2},
-        {"type": "flash", "color": "#000000", "duration": 1, "fade": 3}
-      ]}
+      {
+        "tick": 0,
+        "actions": [
+          {
+            "type": "audio_duck",
+            "duration": 40,
+            "level": 0.2
+          },
+          {
+            "type": "sound",
+            "id": "skysdomains:ember_garden.open",
+            "volume": 1.5,
+            "pitch": 0.9,
+            "at": "center"
+          },
+          {
+            "type": "sphere_scale",
+            "from": 0.0,
+            "to": 1.0,
+            "duration": 30,
+            "easing": "ease_out_expo"
+          },
+          {
+            "type": "fog",
+            "color": "#FF5A1E",
+            "density": 0.6
+          },
+          {
+            "type": "sky",
+            "id": "none"
+          },
+          {
+            "type": "post_shader",
+            "name": "heat",
+            "duration": 0
+          },
+          {
+            "type": "fov_punch",
+            "delta": 9,
+            "duration": 12,
+            "easing": "ease_out_expo"
+          },
+          {
+            "type": "particles",
+            "particle": "minecraft:flame",
+            "count": 150,
+            "area": "ground",
+            "speed": 0.08
+          },
+          {
+            "type": "spawn",
+            "id": "ember_glow",
+            "kind": "billboard",
+            "texture": "skysdomains:scene/glow_soft",
+            "pos": [
+              0,
+              0.6,
+              0
+            ],
+            "scale": 7.0,
+            "color": "#FF7A2A",
+            "alpha": 0.45
+          }
+        ]
+      },
+      {
+        "tick": 5,
+        "actions": [
+          {
+            "type": "impact_frame",
+            "texture": "frame_01",
+            "duration": 2
+          },
+          {
+            "type": "flash",
+            "color": "#FF4A1A",
+            "duration": 1,
+            "fade": 3
+          },
+          {
+            "type": "shake",
+            "strength": 0.6,
+            "duration": 10
+          },
+          {
+            "type": "sound",
+            "id": "skysdomains:ember_garden.impact",
+            "volume": 1.2,
+            "pitch": 0.8
+          },
+          {
+            "type": "post_shader",
+            "name": "chromatic",
+            "duration": 8
+          }
+        ]
+      },
+      {
+        "tick": 15,
+        "actions": [
+          {
+            "type": "impact_frame",
+            "texture": "frame_02",
+            "duration": 2
+          }
+        ]
+      },
+      {
+        "tick": 25,
+        "actions": [
+          {
+            "type": "impact_frame",
+            "texture": "frame_03",
+            "duration": 2
+          },
+          {
+            "type": "flash",
+            "color": "#000000",
+            "duration": 1,
+            "fade": 3
+          }
+        ]
+      }
     ],
     "active": [
-      {"tick": 0, "every": 2, "actions": [
-        {"type": "particles", "particle": "minecraft:flame", "count": 14, "area": "ground", "speed": 0.03},
-        {"type": "particles", "particle": "minecraft:small_flame", "count": 6, "area": "rise", "speed": 0.04}
-      ]},
-      {"tick": 0, "every": 10, "actions": [
-        {"type": "particles", "particle": "minecraft:lava", "count": 2, "area": "ground", "speed": 0.1}
-      ]},
-      {"tick": 0, "every": 50, "actions": [
-        {"type": "sound", "id": "skysdomains:ember_garden.loop", "volume": 0.9, "pitch": 1.0, "at": "player"}
-      ]},
-      {"tick": 0, "every": 30, "actions": [
-        {"type": "spawn", "id": "petal_a", "kind": "billboard", "texture": "skysdomains:scene/ember_petal", "pos": [0.4, 0.0, 0.3], "relative_to_radius": true, "scale": 0.35, "alpha": 0.95, "spin": 3.0},
-        {"type": "move", "id": "petal_a", "pos": [0.5, 0.9, 0.2], "relative_to_radius": true, "alpha": 0.0, "duration": 60, "easing": "ease_out_quad"}
-      ]},
-      {"tick": 15, "every": 30, "actions": [
-        {"type": "spawn", "id": "petal_b", "kind": "billboard", "texture": "skysdomains:scene/ember_petal", "pos": [-0.5, 0.0, -0.2], "relative_to_radius": true, "scale": 0.3, "alpha": 0.95, "spin": -2.5},
-        {"type": "move", "id": "petal_b", "pos": [-0.3, 0.9, -0.4], "relative_to_radius": true, "alpha": 0.0, "duration": 60, "easing": "ease_out_quad"}
-      ]}
+      {
+        "tick": 0,
+        "every": 2,
+        "actions": [
+          {
+            "type": "particles",
+            "particle": "minecraft:flame",
+            "count": 14,
+            "area": "ground",
+            "speed": 0.03
+          },
+          {
+            "type": "particles",
+            "particle": "minecraft:small_flame",
+            "count": 6,
+            "area": "rise",
+            "speed": 0.04
+          }
+        ]
+      },
+      {
+        "tick": 0,
+        "every": 10,
+        "actions": [
+          {
+            "type": "particles",
+            "particle": "minecraft:lava",
+            "count": 2,
+            "area": "ground",
+            "speed": 0.1
+          }
+        ]
+      },
+      {
+        "tick": 0,
+        "every": 50,
+        "actions": [
+          {
+            "type": "sound",
+            "id": "skysdomains:ember_garden.loop",
+            "volume": 0.9,
+            "pitch": 1.0,
+            "at": "player"
+          }
+        ]
+      },
+      {
+        "tick": 0,
+        "every": 30,
+        "actions": [
+          {
+            "type": "spawn",
+            "id": "petal_a",
+            "kind": "billboard",
+            "texture": "skysdomains:scene/ember_petal",
+            "pos": [
+              0.4,
+              0.0,
+              0.3
+            ],
+            "relative_to_radius": true,
+            "scale": 0.35,
+            "alpha": 0.95,
+            "spin": 3.0
+          },
+          {
+            "type": "move",
+            "id": "petal_a",
+            "pos": [
+              0.5,
+              0.9,
+              0.2
+            ],
+            "relative_to_radius": true,
+            "alpha": 0.0,
+            "duration": 60,
+            "easing": "ease_out_quad"
+          }
+        ]
+      },
+      {
+        "tick": 15,
+        "every": 30,
+        "actions": [
+          {
+            "type": "spawn",
+            "id": "petal_b",
+            "kind": "billboard",
+            "texture": "skysdomains:scene/ember_petal",
+            "pos": [
+              -0.5,
+              0.0,
+              -0.2
+            ],
+            "relative_to_radius": true,
+            "scale": 0.3,
+            "alpha": 0.95,
+            "spin": -2.5
+          },
+          {
+            "type": "move",
+            "id": "petal_b",
+            "pos": [
+              -0.3,
+              0.9,
+              -0.4
+            ],
+            "relative_to_radius": true,
+            "alpha": 0.0,
+            "duration": 60,
+            "easing": "ease_out_quad"
+          }
+        ]
+      }
     ],
     "close": [
-      {"tick": 0, "actions": [
-        {"type": "sound", "id": "skysdomains:ember_garden.close", "volume": 1.2, "pitch": 0.8},
-        {"type": "sphere_scale", "from": 1.0, "to": 0.0, "duration": 18, "easing": "ease_in_cubic"},
-        {"type": "remove", "id": "*"},
-        {"type": "fog", "reset": true},
-        {"type": "sky", "id": "default"},
-        {"type": "impact_frame", "texture": "frame_01", "duration": 1},
-        {"type": "particles", "particle": "minecraft:large_smoke", "count": 80, "area": "ground", "speed": 0.05}
-      ]}
+      {
+        "tick": 0,
+        "actions": [
+          {
+            "type": "sound",
+            "id": "skysdomains:ember_garden.close",
+            "volume": 1.2,
+            "pitch": 0.8
+          },
+          {
+            "type": "sphere_scale",
+            "from": 1.0,
+            "to": 0.0,
+            "duration": 18,
+            "easing": "ease_in_cubic"
+          },
+          {
+            "type": "remove",
+            "id": "*"
+          },
+          {
+            "type": "fog",
+            "reset": true
+          },
+          {
+            "type": "sky",
+            "id": "default"
+          },
+          {
+            "type": "impact_frame",
+            "texture": "frame_01",
+            "duration": 1
+          },
+          {
+            "type": "particles",
+            "particle": "minecraft:large_smoke",
+            "count": 80,
+            "area": "ground",
+            "speed": 0.05
+          }
+        ]
+      }
     ]
   },
   "events": {
     "clash": [
-      {"type": "impact_frame", "texture": "frame_02", "duration": 2},
-      {"type": "shake", "strength": 1.0, "duration": 12}
+      {
+        "type": "spawn",
+        "id": "shock",
+        "kind": "ring",
+        "texture": "skysdomains:scene/shockwave",
+        "at_event": true,
+        "pos": [
+          0,
+          0.5,
+          0
+        ],
+        "scale": 0.5,
+        "color": "#FF8A3A",
+        "alpha": 1.0,
+        "tilt": 90
+      },
+      {
+        "type": "move",
+        "id": "shock",
+        "scale": 9.0,
+        "alpha": 0.0,
+        "duration": 14,
+        "easing": "ease_out_cubic"
+      },
+      {
+        "type": "spawn",
+        "id": "flash",
+        "kind": "billboard",
+        "texture": "skysdomains:scene/flash_white",
+        "at_event": true,
+        "pos": [
+          0,
+          0.8,
+          0
+        ],
+        "scale": 2.5,
+        "color": "#FF8A3A",
+        "alpha": 1.0
+      },
+      {
+        "type": "move",
+        "id": "flash",
+        "scale": 0.2,
+        "alpha": 0.0,
+        "duration": 6,
+        "easing": "ease_out_quad"
+      },
+      {
+        "type": "impact_frame",
+        "texture": "frame_02",
+        "duration": 2
+      },
+      {
+        "type": "shake",
+        "strength": 1.0,
+        "duration": 12
+      }
     ]
   }
 }

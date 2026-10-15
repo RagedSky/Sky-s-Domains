@@ -170,14 +170,25 @@ public final class SceneRenderer {
 		float scroll = (age + partialTick) * style.scroll;
 		int light = style.emissive ? FULL_BRIGHT : lightAt(domain.center);
 
+		float spin = (age + partialTick) * 0.002F;
+		// Camera position in the sphere's object space (unit sphere, spun around Y) for the rim/fresnel glow.
+		Vec3 rel = camera.subtract(domain.center).scale(1.0 / radius);
+		double cs = Math.cos(-spin);
+		double sn = Math.sin(-spin);
+		float[] camLocal = {(float) (rel.x * cs - rel.z * sn), (float) rel.y, (float) (rel.x * sn + rel.z * cs)};
+
 		poseStack.pushPose();
 		poseStack.translate(domain.center.x - camera.x, domain.center.y - camera.y, domain.center.z - camera.z);
-		poseStack.rotate(new Quaternionf().rotateY((age + partialTick) * 0.002F));
+		poseStack.rotate(new Quaternionf().rotateY(spin));
 		poseStack.scale((float) radius, (float) radius, (float) radius);
-		PoseStack.Pose pose = poseStack.last();
 		float a = alpha;
 		context.submitNodeCollector().submitCustomGeometry(poseStack, RenderTypes.translucentMovingBlock(), (p, buffer) ->
-				emitSphere(p, buffer, SphereMesh.HIGH, sprite, color, a, light, scroll, true));
+				emitSphere(p, buffer, SphereMesh.HIGH, sprite, color, a, light, scroll, true, camLocal, 1.4F, null));
+		// Soft outer glow shell.
+		poseStack.scale(1.035F, 1.035F, 1.035F);
+		float glowAlpha = Math.min(1.0F, alpha * 0.45F);
+		context.submitNodeCollector().submitCustomGeometry(poseStack, RenderTypes.translucentMovingBlock(), (p, buffer) ->
+				emitSphere(p, buffer, SphereMesh.LOW, glowSprite(), color, glowAlpha, FULL_BRIGHT, 0.0F, true, camLocal, 3.0F, null));
 		poseStack.popPose();
 	}
 
@@ -191,10 +202,23 @@ public final class SceneRenderer {
 		poseStack.translate(world.x - camera.x, world.y - camera.y, world.z - camera.z);
 		switch (object.kind) {
 			case SPHERE -> {
-				poseStack.rotate(new Quaternionf().rotateX((float) Math.toRadians(object.tilt)).rotateY((float) Math.toRadians(object.angle + object.spin * partialTick)));
+				float tiltRad = (float) Math.toRadians(object.tilt);
+				float spinRad = (float) Math.toRadians(object.angle + object.spin * partialTick);
+				poseStack.rotate(new Quaternionf().rotateX(tiltRad).rotateY(spinRad));
 				poseStack.scale(scale, scale, scale);
+				float[] lightLocal = null;
+				if (object.litBy != null) {
+					SceneObject sun = objects.get(object.litBy);
+					if (sun != null && sun != object) {
+						Vec3 toSun = sun.renderPos(partialTick).subtract(object.renderPos(partialTick));
+						if (toSun.lengthSqr() > 1.0E-6) {
+							lightLocal = toObjectSpace(toSun.normalize(), tiltRad, spinRad);
+						}
+					}
+				}
+				float[] lit = lightLocal;
 				context.submitNodeCollector().submitCustomGeometry(poseStack, RenderTypes.translucentMovingBlock(), (p, buffer) ->
-						emitSphere(p, buffer, SphereMesh.LOW, sprite, object.color, object.alpha, light, 0.0F, false));
+						emitSphere(p, buffer, SphereMesh.HIGH, sprite, object.color, object.alpha, light, 0.0F, false, null, 0.0F, lit));
 			}
 			case RING -> {
 				poseStack.rotate(new Quaternionf().rotateX((float) Math.toRadians(object.tilt)).rotateY((float) Math.toRadians(object.angle + object.spin * partialTick)));
@@ -225,9 +249,16 @@ public final class SceneRenderer {
 
 	// --- geometry emitters --------------------------------------------------------------------
 
+	/**
+	 * Emits a unit sphere.
+	 *
+	 * @param camLocal   camera position in object space for a fresnel rim (null = constant alpha)
+	 * @param rimPower   how tight the rim glow is (higher = thinner rim)
+	 * @param lightLocal light direction in object space for lambert shading (null = unlit / emissive)
+	 */
 	private static void emitSphere(PoseStack.Pose pose, VertexConsumer buffer, SphereMesh mesh, TextureAtlasSprite sprite,
-								   int color, float alpha, int light, float scroll, boolean doubleSided) {
-		int a = (int) (alpha * 255.0F);
+								   int color, float alpha, int light, float scroll, boolean doubleSided,
+								   float @Nullable [] camLocal, float rimPower, float @Nullable [] lightLocal) {
 		int r = (color >> 16) & 0xFF;
 		int g = (color >> 8) & 0xFF;
 		int b = color & 0xFF;
@@ -238,26 +269,62 @@ public final class SceneRenderer {
 		float[] d = mesh.data;
 		for (int q = 0; q < mesh.quadCount; q++) {
 			int base = q * 20;
-			// outside (counter-clockwise seen from outside)
-			for (int v = 0; v < 4; v++) {
-				int i = base + v * 5;
-				float su = (d[i + 3] + scroll) % 1.0F;
-				if (su < 0) su += 1.0F;
-				buffer.addVertex(pose, d[i], d[i + 1], d[i + 2]).setColor(r, g, b, a)
-						.setUv(u0 + du * su, v0 + dv * d[i + 4]).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light)
-						.setNormal(pose, d[i], d[i + 1], d[i + 2]);
-			}
-			if (doubleSided) {
-				for (int v = 3; v >= 0; v--) {
+			for (int pass = 0; pass < (doubleSided ? 2 : 1); pass++) {
+				boolean inside = pass == 1;
+				for (int k = 0; k < 4; k++) {
+					int v = inside ? 3 - k : k;
 					int i = base + v * 5;
+					float nx = d[i];
+					float ny = d[i + 1];
+					float nz = d[i + 2];
 					float su = (d[i + 3] + scroll) % 1.0F;
 					if (su < 0) su += 1.0F;
-					buffer.addVertex(pose, d[i], d[i + 1], d[i + 2]).setColor(r, g, b, a)
+					float a = alpha;
+					if (camLocal != null) {
+						float vx = camLocal[0] - nx;
+						float vy = camLocal[1] - ny;
+						float vz = camLocal[2] - nz;
+						float len = (float) Math.sqrt(vx * vx + vy * vy + vz * vz);
+						float facing = len < 1.0E-5F ? 1.0F : Math.abs((nx * vx + ny * vy + nz * vz) / len);
+						float rim = (float) Math.pow(1.0F - Math.min(1.0F, facing), rimPower);
+						a = alpha * (0.3F + 0.7F * rim);
+					}
+					int cr = r;
+					int cg = g;
+					int cb = b;
+					if (lightLocal != null) {
+						float lambert = Math.max(0.0F, nx * lightLocal[0] + ny * lightLocal[1] + nz * lightLocal[2]);
+						float shade = 0.18F + 0.82F * lambert;
+						cr = (int) (r * shade);
+						cg = (int) (g * shade);
+						cb = (int) (b * shade);
+					}
+					buffer.addVertex(pose, nx, ny, nz).setColor(cr, cg, cb, (int) (Math.min(1.0F, a) * 255.0F))
 							.setUv(u0 + du * su, v0 + dv * d[i + 4]).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light)
-							.setNormal(pose, -d[i], -d[i + 1], -d[i + 2]);
+							.setNormal(pose, inside ? -nx : nx, inside ? -ny : ny, inside ? -nz : nz);
 				}
 			}
 		}
+	}
+
+	/** Inverse of the object's rotate(X tilt) * rotate(Y spin): brings a world direction into object space. */
+	private static float[] toObjectSpace(Vec3 dir, float tiltRad, float spinRad) {
+		// inverse Y spin
+		double cy = Math.cos(-spinRad);
+		double sy = Math.sin(-spinRad);
+		double x1 = dir.x * cy + dir.z * sy;
+		double y1 = dir.y;
+		double z1 = -dir.x * sy + dir.z * cy;
+		// inverse X tilt
+		double cx = Math.cos(-tiltRad);
+		double sx = Math.sin(-tiltRad);
+		double y2 = y1 * cx - z1 * sx;
+		double z2 = y1 * sx + z1 * cx;
+		return new float[]{(float) x1, (float) y2, (float) z2};
+	}
+
+	private static TextureAtlasSprite glowSprite() {
+		return DomainSprites.get(Identifier.fromNamespaceAndPath("skysdomains", "scene/glow_soft"));
 	}
 
 	private static void emitRing(PoseStack.Pose pose, VertexConsumer buffer, TextureAtlasSprite sprite, int color, float alpha, int light) {

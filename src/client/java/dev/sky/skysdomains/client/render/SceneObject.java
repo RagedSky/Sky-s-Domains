@@ -55,9 +55,13 @@ public final class SceneObject {
 	public float orbitTilt;
 	public boolean orbiting;
 
-	// follow (rings)
+	// follow (rings, atmospheres, coronas)
 	@Nullable
 	public String followId;
+	public Vec3 followOffset = Vec3.ZERO;
+	/** Spheres: shade with a light coming from the object with this id (e.g. "sun"); null = unlit. */
+	@Nullable
+	public String litBy;
 
 	// tween
 	private boolean tweening;
@@ -151,8 +155,8 @@ public final class SceneObject {
 		} else if (followId != null) {
 			SceneObject target = resolver.apply(followId);
 			if (target != null) {
-				pos = target.pos;
-				if (!target.visible) visible = false;
+				pos = target.pos.add(followOffset);
+				visible = target.visible && target.alpha > 0.01F && target.scale > 0.001F;
 			}
 		}
 	}

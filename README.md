@@ -131,9 +131,11 @@ no-op). The full reference with all fields is in [docs/SEQUENCES.md](docs/SEQUEN
 
 ## Assets
 
-Every texture and sound is a generated placeholder. [docs/ASSETS.md](docs/ASSETS.md) lists each
-path with the recommended resolution so you can replace them 1:1. `tools/generate_placeholders.py`
-regenerates all placeholder PNGs.
+Impact frames (2560×1440) and scene textures (1024×512 sphere skins, 512px planets and sprites)
+are procedurally rendered by `tools/generate_art.py` (`--frames 2160` produces true 4K frames at
+about four times the jar size and VRAM). Item and block icons come from
+`tools/generate_placeholders.py`. [docs/ASSETS.md](docs/ASSETS.md) lists each path so you can
+replace them 1:1. Sounds are still vanilla placeholders (see `sounds.json`).
 
 ## Project layout
 
