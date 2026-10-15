@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_transmute",
+  "category": "misc",
+  "group": "skysdomains:inscribe_absolute",
+  "input": "skysdomains:absolute_talisman",
+  "material": "skysdomains:frost_sigil",
+  "result": {
+    "id": "skysdomains:absolute_talisman",
+    "components": {
+      "skysdomains:domain": "frost_vault"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "KSK",
+    "DED",
+    "KSK"
+  ],
+  "key": {
+    "K": "minecraft:ink_sac",
+    "S": "minecraft:sculk",
+    "D": "skysdomains:arcane_dust",
+    "E": "minecraft:echo_shard"
+  },
+  "result": {
+    "id": "skysdomains:umbral_sigil"
+  }
+}

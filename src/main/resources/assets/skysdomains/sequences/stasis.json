@@ -1,0 +1,203 @@
+{
+  "_comment": "Stasis: world desaturates (post shader), particles stop, clock motif, grey impact frames, ticking that stops, then silence.",
+  "sphere": {
+    "texture": "skysdomains:scene/sphere_stasis",
+    "color": "#D8D8D8",
+    "alpha": 0.25,
+    "inside_alpha": 0.3,
+    "scroll": 0.0,
+    "emissive": true
+  },
+  "phases": {
+    "open": [
+      {
+        "tick": 0,
+        "actions": [
+          {
+            "type": "sound",
+            "id": "skysdomains:stasis.open",
+            "volume": 1.4,
+            "pitch": 1.0,
+            "at": "center"
+          },
+          {
+            "type": "sphere_scale",
+            "from": 0.0,
+            "to": 1.0,
+            "duration": 24,
+            "easing": "ease_out_expo"
+          },
+          {
+            "type": "fov_punch",
+            "delta": 4,
+            "duration": 24,
+            "easing": "ease_out_quad"
+          },
+          {
+            "type": "spawn",
+            "id": "clock",
+            "kind": "ring",
+            "texture": "skysdomains:scene/clock_face",
+            "pos": [
+              0.0,
+              0.6,
+              0.0
+            ],
+            "relative_to_radius": true,
+            "scale": 0.5,
+            "alpha": 0.8,
+            "spin": 6.0
+          },
+          {
+            "type": "move",
+            "id": "clock",
+            "scale": 0.5,
+            "duration": 1
+          }
+        ]
+      },
+      {
+        "tick": 8,
+        "actions": [
+          {
+            "type": "impact_frame",
+            "texture": "frame_01",
+            "duration": 2
+          },
+          {
+            "type": "flash",
+            "color": "#E0E0E0",
+            "duration": 1,
+            "fade": 2
+          },
+          {
+            "type": "sound",
+            "id": "skysdomains:stasis.impact",
+            "volume": 1.0,
+            "pitch": 1.0
+          }
+        ]
+      },
+      {
+        "tick": 20,
+        "actions": [
+          {
+            "type": "impact_frame",
+            "texture": "frame_02",
+            "duration": 2
+          }
+        ]
+      },
+      {
+        "tick": 28,
+        "actions": [
+          {
+            "type": "impact_frame",
+            "texture": "frame_03",
+            "duration": 3
+          },
+          {
+            "type": "post_shader",
+            "name": "desaturate",
+            "duration": 0
+          },
+          {
+            "type": "audio_duck",
+            "duration": 100000,
+            "level": 0.05,
+            "_comment": "released automatically when the domain closes"
+          },
+          {
+            "type": "move",
+            "id": "clock",
+            "spin": 0.0,
+            "duration": 1
+          },
+          {
+            "type": "sound",
+            "id": "skysdomains:stasis.impact",
+            "volume": 1.2,
+            "pitch": 0.5
+          }
+        ]
+      }
+    ],
+    "active": [
+      {
+        "tick": 0,
+        "every": 20,
+        "actions": [
+          {
+            "type": "particles",
+            "particle": "minecraft:white_ash",
+            "count": 10,
+            "area": "sphere",
+            "speed": 0.0
+          }
+        ]
+      }
+    ],
+    "close": [
+      {
+        "tick": 0,
+        "actions": [
+          {
+            "type": "sound",
+            "id": "skysdomains:stasis.close",
+            "volume": 1.2,
+            "pitch": 1.0
+          },
+          {
+            "type": "sphere_scale",
+            "from": 1.0,
+            "to": 0.0,
+            "duration": 16,
+            "easing": "ease_in_cubic"
+          },
+          {
+            "type": "move",
+            "id": "clock",
+            "spin": 12.0,
+            "scale": 0.0,
+            "duration": 14,
+            "easing": "ease_in_cubic"
+          },
+          {
+            "type": "impact_frame",
+            "texture": "frame_01",
+            "duration": 2
+          },
+          {
+            "type": "flash",
+            "color": "#FFFFFF",
+            "duration": 1,
+            "fade": 4
+          }
+        ]
+      },
+      {
+        "tick": 16,
+        "actions": [
+          {
+            "type": "remove",
+            "id": "*"
+          }
+        ]
+      }
+    ]
+  },
+  "events": {
+    "clash": [
+      {
+        "type": "impact_frame",
+        "texture": "frame_02",
+        "duration": 2
+      },
+      {
+        "type": "shake",
+        "strength": 0.8,
+        "duration": 12
+      }
+    ]
+  }
+}

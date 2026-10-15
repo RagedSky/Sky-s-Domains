@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "DED",
+    "EBE",
+    "DED"
+  ],
+  "key": {
+    "D": "skysdomains:arcane_dust",
+    "E": "minecraft:ender_pearl",
+    "B": "minecraft:book"
+  },
+  "result": {
+    "id": "skysdomains:domain_core"
+  }
+}

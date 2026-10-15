@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "skysdomains:abyssal_shard",
+    "skysdomains:arcane_dust",
+    "minecraft:amethyst_shard"
+  ],
+  "result": {
+    "id": "skysdomains:refinement"
+  }
+}

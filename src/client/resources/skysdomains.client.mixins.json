@@ -1,0 +1,16 @@
+{
+	"required": true,
+	"package": "dev.sky.skysdomains.client.mixin",
+	"compatibilityLevel": "JAVA_25",
+	"client": [
+		"ParticleEngineFreezeMixin",
+		"LevelRendererFogSkyMixin",
+		"GameRendererPostEffectMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

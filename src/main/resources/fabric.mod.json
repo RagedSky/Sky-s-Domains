@@ -1,0 +1,35 @@
+{
+	"schemaVersion": 1,
+	"id": "skysdomains",
+	"version": "${version}",
+	"name": "Sky's Domains",
+	"description": "Domain expansions powered by talismans and sigils: six cinematic domains with server-synchronised animations.",
+	"authors": [
+		"Sky"
+	],
+	"contact": {},
+	"license": "MIT",
+	"icon": "assets/skysdomains/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"dev.sky.skysdomains.SkysDomains"
+		],
+		"client": [
+			"dev.sky.skysdomains.client.SkysDomainsClient"
+		]
+	},
+	"mixins": [
+		"skysdomains.mixins.json",
+		{
+			"config": "skysdomains.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}

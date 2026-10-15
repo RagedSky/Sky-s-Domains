@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:scattered_ore",
+  "discard_chance_on_air_exposure": 0.9,
+  "size": 2,
+  "targets": [
+    {
+      "state": "skysdomains:void_ore",
+      "target": {
+        "predicate_type": "minecraft:block_match",
+        "block": "minecraft:end_stone"
+      }
+    }
+  ]
+}

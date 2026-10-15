@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "skysdomains:echoed_matter",
+    "skysdomains:echoed_matter",
+    "skysdomains:void_crystal",
+    "skysdomains:void_crystal",
+    "skysdomains:cursed_fragment"
+  ],
+  "result": {
+    "id": "skysdomains:transcendent_catalyst"
+  }
+}

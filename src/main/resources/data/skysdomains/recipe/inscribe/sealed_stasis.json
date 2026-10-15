@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_transmute",
+  "category": "misc",
+  "group": "skysdomains:inscribe_sealed",
+  "input": "skysdomains:sealed_talisman",
+  "material": "skysdomains:stasis_sigil",
+  "result": {
+    "id": "skysdomains:sealed_talisman",
+    "components": {
+      "skysdomains:domain": "stasis"
+    }
+  }
+}

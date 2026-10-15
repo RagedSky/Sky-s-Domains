@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_transmute",
+  "category": "misc",
+  "group": "skysdomains:inscribe_fractured",
+  "input": "skysdomains:fractured_talisman",
+  "material": "skysdomains:frost_sigil",
+  "result": {
+    "id": "skysdomains:fractured_talisman",
+    "components": {
+      "skysdomains:domain": "frost_vault"
+    }
+  }
+}

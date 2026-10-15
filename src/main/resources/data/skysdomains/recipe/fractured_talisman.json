@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PIP",
+    "PCP",
+    "P P"
+  ],
+  "key": {
+    "P": "minecraft:paper",
+    "I": "skysdomains:sealing_ink",
+    "C": "skysdomains:domain_core"
+  },
+  "result": {
+    "id": "skysdomains:fractured_talisman"
+  }
+}

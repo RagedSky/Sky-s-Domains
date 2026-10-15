@@ -1,0 +1,335 @@
+{
+  "domain.activate": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:block.beacon.activate",
+        "volume": 1.0,
+        "pitch": 1.0
+      }
+    ],
+    "subtitle": "subtitles.skysdomains.domain.activate"
+  },
+  "domain.denied": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:block.note_block.bass",
+        "volume": 0.7,
+        "pitch": 0.6
+      }
+    ]
+  },
+  "domain.impact_frame": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:entity.lightning_bolt.impact",
+        "volume": 0.8,
+        "pitch": 1.4
+      }
+    ],
+    "subtitle": "subtitles.skysdomains.domain.impact_frame"
+  },
+  "domain.clash": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:entity.wither.spawn",
+        "volume": 1.0,
+        "pitch": 1.3
+      }
+    ]
+  },
+  "collapse.planet_launch": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:entity.breeze.wind_burst",
+        "volume": 1.0,
+        "pitch": 0.8
+      }
+    ]
+  },
+  "collapse.planet_impact": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:entity.generic.explode",
+        "volume": 1.0,
+        "pitch": 0.9
+      }
+    ],
+    "subtitle": "subtitles.skysdomains.collapse.planet_impact"
+  },
+  "collapse.sun_impact": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:entity.dragon_fireball.explode",
+        "volume": 1.0,
+        "pitch": 0.5
+      }
+    ]
+  },
+  "collapse.white_hole": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:block.respawn_anchor.deplete",
+        "volume": 1.0,
+        "pitch": 0.5
+      }
+    ]
+  },
+  "glass_heaven.shatter": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:block.glass.break",
+        "volume": 1.0,
+        "pitch": 1.2
+      }
+    ]
+  },
+  "frost_vault.open": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:block.powder_snow.break",
+        "volume": 1.0,
+        "pitch": 0.6
+      }
+    ]
+  },
+  "frost_vault.loop": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:entity.player.hurt_freeze",
+        "volume": 0.5,
+        "pitch": 0.7
+      }
+    ]
+  },
+  "frost_vault.impact": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:block.glass.break",
+        "volume": 1.0,
+        "pitch": 0.8
+      }
+    ]
+  },
+  "frost_vault.close": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:block.amethyst_cluster.break",
+        "volume": 1.0,
+        "pitch": 0.7
+      }
+    ]
+  },
+  "umbral_sea.open": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:entity.warden.emerge",
+        "volume": 1.0,
+        "pitch": 0.6
+      }
+    ]
+  },
+  "umbral_sea.loop": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:entity.warden.heartbeat",
+        "volume": 1.0,
+        "pitch": 0.6
+      }
+    ]
+  },
+  "umbral_sea.impact": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:entity.warden.sonic_boom",
+        "volume": 0.6,
+        "pitch": 0.5
+      }
+    ]
+  },
+  "umbral_sea.close": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:block.sculk_shrieker.shriek",
+        "volume": 0.8,
+        "pitch": 0.6
+      }
+    ]
+  },
+  "glass_heaven.open": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:block.bell.use",
+        "volume": 1.0,
+        "pitch": 1.2
+      }
+    ]
+  },
+  "glass_heaven.loop": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:block.amethyst_block.chime",
+        "volume": 1.0,
+        "pitch": 1.0
+      }
+    ]
+  },
+  "glass_heaven.impact": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:block.glass.break",
+        "volume": 1.0,
+        "pitch": 1.3
+      }
+    ]
+  },
+  "glass_heaven.close": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:block.bell.use",
+        "volume": 1.0,
+        "pitch": 0.8
+      }
+    ]
+  },
+  "ember_garden.open": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:entity.blaze.shoot",
+        "volume": 1.0,
+        "pitch": 0.7
+      }
+    ]
+  },
+  "ember_garden.loop": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:block.fire.ambient",
+        "volume": 1.0,
+        "pitch": 1.0
+      }
+    ]
+  },
+  "ember_garden.impact": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:entity.ghast.shoot",
+        "volume": 1.0,
+        "pitch": 0.8
+      }
+    ]
+  },
+  "ember_garden.close": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:block.fire.extinguish",
+        "volume": 1.0,
+        "pitch": 0.8
+      }
+    ]
+  },
+  "stasis.open": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:block.note_block.hat",
+        "volume": 1.0,
+        "pitch": 0.8
+      }
+    ]
+  },
+  "stasis.loop": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:block.copper_bulb.turn_on",
+        "volume": 0.3,
+        "pitch": 1.0
+      }
+    ]
+  },
+  "stasis.impact": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:block.beacon.deactivate",
+        "volume": 1.0,
+        "pitch": 1.5
+      }
+    ]
+  },
+  "stasis.close": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:block.beacon.activate",
+        "volume": 1.0,
+        "pitch": 1.4
+      }
+    ]
+  },
+  "structural_collapse.open": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:block.end_portal.spawn",
+        "volume": 1.0,
+        "pitch": 0.7
+      }
+    ]
+  },
+  "structural_collapse.loop": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:block.conduit.ambient",
+        "volume": 1.0,
+        "pitch": 0.5
+      }
+    ]
+  },
+  "structural_collapse.impact": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:entity.lightning_bolt.thunder",
+        "volume": 1.0,
+        "pitch": 0.8
+      }
+    ]
+  },
+  "structural_collapse.close": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:entity.wither.death",
+        "volume": 0.8,
+        "pitch": 1.2
+      }
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:ink_sac",
+    "skysdomains:arcane_dust",
+    "minecraft:glass_bottle"
+  ],
+  "result": {
+    "id": "skysdomains:sealing_ink",
+    "count": 3
+  }
+}

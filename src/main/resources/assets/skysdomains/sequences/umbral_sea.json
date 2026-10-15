@@ -1,0 +1,62 @@
+{
+  "_comment": "Umbral Sea: black liquid rises from the ground, starless sky, pure black impact frames with white outlines, deep reverb sounds.",
+  "sphere": {"texture": "skysdomains:scene/sphere_umbral_sea", "color": "#0A0616", "alpha": 0.6, "inside_alpha": 0.85, "inside_opaque": true, "scroll": 0.006, "emissive": true},
+  "phases": {
+    "open": [
+      {"tick": 0, "actions": [
+        {"type": "audio_duck", "duration": 50, "level": 0.1},
+        {"type": "sound", "id": "skysdomains:umbral_sea.open", "volume": 1.6, "pitch": 0.7, "at": "center"},
+        {"type": "sphere_scale", "from": 0.0, "to": 1.0, "duration": 30, "easing": "ease_out_expo"},
+        {"type": "fog", "color": "#000004", "density": 0.9},
+        {"type": "sky", "id": "none"},
+        {"type": "vignette", "strength": 0.9, "duration": 0},
+        {"type": "fov_punch", "delta": -6, "duration": 20, "easing": "ease_out_cubic"},
+        {"type": "spawn", "id": "sea", "kind": "ring", "texture": "skysdomains:scene/shadow_blob", "pos": [0.0, -0.4, 0.0], "scale": 0.95, "relative_to_radius": true, "color": "#05030A", "alpha": 0.95, "spin": 0.2}
+      ]},
+      {"tick": 1, "actions": [
+        {"type": "move", "id": "sea", "pos": [0.0, 1.2, 0.0], "duration": 100, "easing": "ease_out_quad"}
+      ]},
+      {"tick": 6, "actions": [
+        {"type": "impact_frame", "texture": "frame_01", "duration": 2},
+        {"type": "flash", "color": "#000000", "duration": 1, "fade": 3},
+        {"type": "shake", "strength": 0.4, "duration": 10}
+      ]},
+      {"tick": 18, "actions": [
+        {"type": "impact_frame", "texture": "frame_02", "duration": 2},
+        {"type": "sound", "id": "skysdomains:umbral_sea.impact", "volume": 1.0, "pitch": 0.6}
+      ]}
+    ],
+    "active": [
+      {"tick": 0, "every": 4, "actions": [
+        {"type": "particles", "particle": "minecraft:squid_ink", "count": 10, "area": "rise", "speed": 0.03}
+      ]},
+      {"tick": 0, "every": 80, "actions": [
+        {"type": "sound", "id": "skysdomains:umbral_sea.loop", "volume": 1.0, "pitch": 0.8, "at": "center"}
+      ]},
+      {"tick": 0, "every": 20, "actions": [
+        {"type": "particles", "particle": "minecraft:sculk_soul", "count": 4, "area": "center", "spread": 3.0, "speed": 0.02}
+      ]}
+    ],
+    "close": [
+      {"tick": 0, "actions": [
+        {"type": "sound", "id": "skysdomains:umbral_sea.close", "volume": 1.2, "pitch": 0.7},
+        {"type": "sphere_scale", "from": 1.0, "to": 0.0, "duration": 18, "easing": "ease_in_cubic"},
+        {"type": "move", "id": "sea", "pos": [0.0, -0.5, 0.0], "alpha": 0.0, "duration": 16, "easing": "ease_in_cubic"},
+        {"type": "fog", "reset": true},
+        {"type": "sky", "id": "default"},
+        {"type": "impact_frame", "texture": "frame_03", "duration": 2}
+      ]},
+      {"tick": 18, "actions": [{"type": "remove", "id": "*"}]}
+    ]
+  },
+  "events": {
+    "center_hit": [
+      {"type": "particles", "particle": "minecraft:squid_ink", "count": 20, "area": "event", "spread": 1.5, "speed": 0.15},
+      {"type": "sound", "id": "skysdomains:umbral_sea.impact", "volume": 0.8, "pitch": 0.5, "at": "event"}
+    ],
+    "clash": [
+      {"type": "impact_frame", "texture": "frame_02", "duration": 2},
+      {"type": "shake", "strength": 1.0, "duration": 12}
+    ]
+  }
+}

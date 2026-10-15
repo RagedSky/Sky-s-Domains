@@ -1,0 +1,71 @@
+{
+  "_comment": "Frost Vault: ice crystals grow over the sphere, white-blue fog, cyan impact frames, cracking/splintering sounds.",
+  "sphere": {"texture": "skysdomains:scene/sphere_frost_vault", "color": "#DDF6FF", "alpha": 0.35, "inside_alpha": 0.45, "scroll": 0.004, "emissive": true},
+  "phases": {
+    "open": [
+      {"tick": 0, "actions": [
+        {"type": "audio_duck", "duration": 40, "level": 0.2},
+        {"type": "sound", "id": "skysdomains:frost_vault.open", "volume": 1.5, "pitch": 1.0, "at": "center"},
+        {"type": "sphere_scale", "from": 0.0, "to": 1.0, "duration": 30, "easing": "ease_out_expo"},
+        {"type": "fog", "color": "#E8F8FF", "density": 0.5},
+        {"type": "fov_punch", "delta": 8, "duration": 12, "easing": "ease_out_expo"},
+        {"type": "particles", "particle": "minecraft:snowflake", "count": 120, "area": "shell", "speed": 0.1},
+        {"type": "spawn", "id": "crystal_1", "kind": "billboard", "texture": "skysdomains:scene/ice_crystal", "pos": [0.9, 0.3, 0.0], "relative_to_radius": true, "scale": 0.05, "alpha": 0.9},
+        {"type": "spawn", "id": "crystal_2", "kind": "billboard", "texture": "skysdomains:scene/ice_crystal", "pos": [-0.8, 0.5, 0.3], "relative_to_radius": true, "scale": 0.05, "alpha": 0.9},
+        {"type": "spawn", "id": "crystal_3", "kind": "billboard", "texture": "skysdomains:scene/ice_crystal", "pos": [0.2, 0.2, -0.95], "relative_to_radius": true, "scale": 0.05, "alpha": 0.9},
+        {"type": "spawn", "id": "crystal_4", "kind": "billboard", "texture": "skysdomains:scene/ice_crystal", "pos": [-0.3, 0.1, 0.9], "relative_to_radius": true, "scale": 0.05, "alpha": 0.9},
+        {"type": "spawn", "id": "crystal_5", "kind": "billboard", "texture": "skysdomains:scene/ice_crystal", "pos": [0.5, 0.8, 0.3], "relative_to_radius": true, "scale": 0.05, "alpha": 0.9},
+        {"type": "spawn", "id": "crystal_6", "kind": "billboard", "texture": "skysdomains:scene/ice_crystal", "pos": [-0.6, 0.7, -0.4], "relative_to_radius": true, "scale": 0.05, "alpha": 0.9}
+      ]},
+      {"tick": 2, "actions": [
+        {"type": "move", "id": "crystal_1", "scale": 2.5, "duration": 26, "easing": "ease_out_back"},
+        {"type": "move", "id": "crystal_2", "scale": 2.0, "duration": 24, "easing": "ease_out_back"},
+        {"type": "move", "id": "crystal_3", "scale": 2.8, "duration": 28, "easing": "ease_out_back"},
+        {"type": "move", "id": "crystal_4", "scale": 2.2, "duration": 22, "easing": "ease_out_back"},
+        {"type": "move", "id": "crystal_5", "scale": 1.8, "duration": 20, "easing": "ease_out_back"},
+        {"type": "move", "id": "crystal_6", "scale": 2.4, "duration": 27, "easing": "ease_out_back"}
+      ]},
+      {"tick": 4, "actions": [
+        {"type": "impact_frame", "texture": "frame_01", "duration": 2},
+        {"type": "flash", "color": "#FFFFFF", "duration": 1, "fade": 3},
+        {"type": "shake", "strength": 0.5, "duration": 8},
+        {"type": "sound", "id": "skysdomains:frost_vault.impact", "volume": 1.2, "pitch": 0.9}
+      ]},
+      {"tick": 14, "actions": [
+        {"type": "impact_frame", "texture": "frame_02", "duration": 2},
+        {"type": "sound", "id": "skysdomains:frost_vault.impact", "volume": 1.0, "pitch": 1.2}
+      ]},
+      {"tick": 26, "actions": [
+        {"type": "impact_frame", "texture": "frame_03", "duration": 2},
+        {"type": "flash", "color": "#BFF4FF", "duration": 1, "fade": 4}
+      ]}
+    ],
+    "active": [
+      {"tick": 0, "every": 6, "actions": [
+        {"type": "particles", "particle": "minecraft:snowflake", "count": 12, "area": "sphere", "speed": 0.02}
+      ]},
+      {"tick": 0, "every": 60, "actions": [
+        {"type": "sound", "id": "skysdomains:frost_vault.loop", "volume": 0.8, "pitch": 1.0, "at": "center"}
+      ]},
+      {"tick": 0, "every": 40, "actions": [
+        {"type": "sound", "id": "skysdomains:frost_vault.impact", "volume": 0.4, "pitch": 1.4, "at": "player"}
+      ]}
+    ],
+    "close": [
+      {"tick": 0, "actions": [
+        {"type": "sound", "id": "skysdomains:frost_vault.close", "volume": 1.2},
+        {"type": "sphere_scale", "from": 1.0, "to": 0.0, "duration": 18, "easing": "ease_in_cubic"},
+        {"type": "remove", "id": "*"},
+        {"type": "fog", "reset": true},
+        {"type": "particles", "particle": "minecraft:snowflake", "count": 80, "area": "shell", "speed": 0.15},
+        {"type": "impact_frame", "texture": "frame_01", "duration": 1}
+      ]}
+    ]
+  },
+  "events": {
+    "clash": [
+      {"type": "impact_frame", "texture": "frame_03", "duration": 2},
+      {"type": "shake", "strength": 1.0, "duration": 12}
+    ]
+  }
+}

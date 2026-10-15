@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "IPI",
+    "DBD",
+    "I I"
+  ],
+  "key": {
+    "I": "minecraft:packed_ice",
+    "P": "minecraft:powder_snow_bucket",
+    "D": "skysdomains:arcane_dust",
+    "B": "minecraft:blue_ice"
+  },
+  "result": {
+    "id": "skysdomains:frost_sigil"
+  }
+}

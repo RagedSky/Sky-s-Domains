@@ -1,0 +1,156 @@
+{
+  "_comment": "Structural Collapse. Phases and their lengths come from the server (config): activation 30, expand 20, solar_system 50, collapse 30, bombardment (planets * interval + flight + 10 [+ sun]), end 30. Ticks are relative to the phase start. Planet launches/impacts are server events (see 'events').",
+  "sphere": {"texture": "skysdomains:scene/sphere_structural_collapse", "color": "#FFFFFF", "alpha": 0.5, "inside_alpha": 1.0, "inside_opaque": true, "scroll": 0.001, "emissive": true},
+  "phases": {
+    "activation": [
+      {"tick": 0, "actions": [
+        {"type": "audio_duck", "duration": 260, "level": 0.1},
+        {"type": "sound", "id": "skysdomains:structural_collapse.open", "volume": 1.6, "pitch": 0.8, "at": "player"},
+        {"type": "sphere_scale", "from": 0.0, "to": 0.05, "duration": 30, "easing": "ease_out_quad"},
+        {"type": "fov_punch", "delta": 10, "duration": 16, "easing": "ease_out_expo"},
+        {"type": "shake", "strength": 0.3, "duration": 30},
+        {"type": "vignette", "strength": 0.6, "duration": 0}
+      ]},
+      {"tick": 0, "every": 2, "actions": [
+        {"type": "particles", "particle": "minecraft:end_rod", "count": 12, "area": "center", "spread": 4.0, "speed": 0.12}
+      ]},
+      {"tick": 6, "actions": [
+        {"type": "impact_frame", "texture": "frame_01", "duration": 2},
+        {"type": "flash", "color": "#FFFFFF", "duration": 1, "fade": 2},
+        {"type": "sound", "id": "skysdomains:domain.impact_frame", "volume": 1.0, "pitch": 1.0, "at": "player"}
+      ]},
+      {"tick": 14, "actions": [
+        {"type": "impact_frame", "texture": "frame_02", "duration": 2},
+        {"type": "flash", "color": "#FFFFFF", "duration": 1, "fade": 2},
+        {"type": "sound", "id": "skysdomains:domain.impact_frame", "volume": 1.0, "pitch": 0.9, "at": "player"}
+      ]},
+      {"tick": 22, "actions": [
+        {"type": "impact_frame", "texture": "frame_03", "duration": 2},
+        {"type": "flash", "color": "#FFFFFF", "duration": 1, "fade": 2},
+        {"type": "invert", "duration": 2},
+        {"type": "sound", "id": "skysdomains:domain.impact_frame", "volume": 1.0, "pitch": 0.8, "at": "player"}
+      ]}
+    ],
+    "expand": [
+      {"tick": 0, "actions": [
+        {"type": "sphere_scale", "from": 0.05, "to": 1.0, "duration": 20, "easing": "ease_out_expo"},
+        {"type": "fog", "color": "#02020C", "density": 0.9},
+        {"type": "sky", "id": "space"},
+        {"type": "shake", "strength": 0.6, "duration": 12},
+        {"type": "sound", "id": "skysdomains:structural_collapse.impact", "volume": 1.4, "pitch": 0.6, "at": "center"}
+      ]},
+      {"tick": 0, "every": 1, "actions": [
+        {"type": "particles", "particle": "minecraft:end_rod", "count": 25, "area": "shell", "speed": 0.3}
+      ]}
+    ],
+    "solar_system": [
+      {"tick": 0, "actions": [
+        {"type": "sound", "id": "skysdomains:structural_collapse.loop", "volume": 1.0, "pitch": 1.0, "at": "center"},
+        {"type": "spawn", "id": "sun", "kind": "sphere", "texture": "skysdomains:scene/sun", "pos": [0.0, 0.45, 0.0], "relative_to_radius": true, "scale": 0.0, "color": "#FFFFFF", "spin": 0.4, "emissive": true},
+        {"type": "move", "id": "sun", "scale": 1.6, "duration": 20, "easing": "ease_out_back"},
+        {"type": "spawn", "id": "mercury", "kind": "sphere", "texture": "skysdomains:scene/planet_mercury", "scale": 0.35, "spin": 2.0, "only_if_planet": 0},
+        {"type": "spawn", "id": "venus", "kind": "sphere", "texture": "skysdomains:scene/planet_venus", "scale": 0.5, "spin": 1.5, "only_if_planet": 1},
+        {"type": "spawn", "id": "earth", "kind": "sphere", "texture": "skysdomains:scene/planet_earth", "scale": 0.55, "spin": 1.8, "only_if_planet": 2},
+        {"type": "spawn", "id": "mars", "kind": "sphere", "texture": "skysdomains:scene/planet_mars", "scale": 0.4, "spin": 1.6, "only_if_planet": 3},
+        {"type": "spawn", "id": "jupiter", "kind": "sphere", "texture": "skysdomains:scene/planet_jupiter", "scale": 1.0, "spin": 2.5, "only_if_planet": 4},
+        {"type": "spawn", "id": "saturn", "kind": "sphere", "texture": "skysdomains:scene/planet_saturn", "scale": 0.9, "spin": 2.2, "only_if_planet": 5, "ring": {"texture": "skysdomains:scene/ring_saturn", "scale": 1.9, "tilt": 25, "alpha": 0.9}},
+        {"type": "spawn", "id": "uranus", "kind": "sphere", "texture": "skysdomains:scene/planet_uranus", "scale": 0.7, "spin": 1.2, "only_if_planet": 6},
+        {"type": "spawn", "id": "neptune", "kind": "sphere", "texture": "skysdomains:scene/planet_neptune", "scale": 0.65, "spin": 1.3, "only_if_planet": 7},
+        {"type": "orbit", "id": "mercury", "around": "sun", "radius": 0.18, "relative_to_radius": true, "period": 70, "phase": 0.1, "tilt": 4},
+        {"type": "orbit", "id": "venus", "around": "sun", "radius": 0.26, "relative_to_radius": true, "period": 95, "phase": 0.5, "tilt": -3},
+        {"type": "orbit", "id": "earth", "around": "sun", "radius": 0.34, "relative_to_radius": true, "period": 120, "phase": 0.8, "tilt": 2},
+        {"type": "orbit", "id": "mars", "around": "sun", "radius": 0.42, "relative_to_radius": true, "period": 150, "phase": 0.25, "tilt": -5},
+        {"type": "orbit", "id": "jupiter", "around": "sun", "radius": 0.54, "relative_to_radius": true, "period": 200, "phase": 0.65, "tilt": 3},
+        {"type": "orbit", "id": "saturn", "around": "sun", "radius": 0.66, "relative_to_radius": true, "period": 240, "phase": 0.0, "tilt": -4},
+        {"type": "orbit", "id": "uranus", "around": "sun", "radius": 0.76, "relative_to_radius": true, "period": 280, "phase": 0.4, "tilt": 6},
+        {"type": "orbit", "id": "neptune", "around": "sun", "radius": 0.85, "relative_to_radius": true, "period": 320, "phase": 0.9, "tilt": -2}
+      ]},
+      {"tick": 0, "every": 10, "actions": [
+        {"type": "particles", "particle": "minecraft:end_rod", "count": 6, "area": "sphere", "speed": 0.005}
+      ]}
+    ],
+    "collapse": [
+      {"tick": 0, "actions": [
+        {"type": "orbit_collapse", "target": "sun", "duration": 24, "easing": "ease_in_cubic"},
+        {"type": "sound", "id": "skysdomains:structural_collapse.impact", "volume": 1.2, "pitch": 0.5, "at": "center"},
+        {"type": "shake", "strength": 0.4, "duration": 28}
+      ]},
+      {"tick": 22, "actions": [
+        {"type": "move", "id": "sun", "scale": 0.0, "duration": 6, "easing": "ease_in_cubic"},
+        {"type": "fov_punch", "delta": -8, "duration": 8, "easing": "ease_in_cubic"}
+      ]},
+      {"tick": 28, "actions": [
+        {"type": "flash", "color": "#000000", "duration": 1, "fade": 0}
+      ]},
+      {"tick": 29, "actions": [
+        {"type": "impact_frame", "texture": "frame_01", "duration": 2},
+        {"type": "invert", "duration": 2},
+        {"type": "spawn", "id": "white_hole", "kind": "sphere", "texture": "skysdomains:scene/white_hole", "pos": [0.0, 0.45, 0.0], "relative_to_radius": true, "scale": 0.2, "color": "#FFFFFF", "spin": 1.0, "emissive": true},
+        {"type": "move", "id": "white_hole", "scale": 1.8, "duration": 10, "easing": "ease_out_expo"},
+        {"type": "sound", "id": "skysdomains:collapse.white_hole", "volume": 1.6, "pitch": 1.0, "at": "center"},
+        {"type": "shake", "strength": 0.9, "duration": 12},
+        {"type": "particles", "particle": "minecraft:end_rod", "count": 120, "area": "center", "spread": 2.0, "speed": 0.5}
+      ]}
+    ],
+    "bombardment": [
+      {"tick": 0, "every": 2, "actions": [
+        {"type": "particles", "particle": "minecraft:electric_spark", "count": 6, "area": "center", "spread": 3.0, "speed": 0.3}
+      ]},
+      {"tick": 0, "every": 20, "actions": [
+        {"type": "move", "id": "white_hole", "scale": 2.1, "duration": 10, "easing": "ease_in_out_quad"}
+      ]},
+      {"tick": 10, "every": 20, "actions": [
+        {"type": "move", "id": "white_hole", "scale": 1.7, "duration": 10, "easing": "ease_in_out_quad"}
+      ]}
+    ],
+    "end": [
+      {"tick": 0, "actions": [
+        {"type": "impact_frame", "texture": "frame_03", "duration": 2},
+        {"type": "flash", "color": "#FFFFFF", "duration": 1, "fade": 3},
+        {"type": "move", "id": "white_hole", "scale": 0.0, "duration": 8, "easing": "ease_in_cubic"},
+        {"type": "sound", "id": "skysdomains:structural_collapse.close", "volume": 1.5, "pitch": 0.9, "at": "center"},
+        {"type": "shake", "strength": 0.5, "duration": 10}
+      ]},
+      {"tick": 8, "actions": [
+        {"type": "sphere_scale", "from": 1.0, "to": 0.0, "duration": 20, "easing": "ease_in_cubic"},
+        {"type": "fog", "reset": true},
+        {"type": "sky", "id": "default"},
+        {"type": "particles", "particle": "minecraft:end_rod", "count": 150, "area": "shell", "speed": 0.2}
+      ]},
+      {"tick": 28, "actions": [{"type": "remove", "id": "*"}]}
+    ]
+  },
+  "events": {
+    "planet_launch": [
+      {"type": "sound", "id": "skysdomains:collapse.planet_launch", "volume": 1.2, "pitch": 1.0, "at": "center"},
+      {"type": "particles", "particle": "minecraft:end_rod", "count": 20, "area": "center", "spread": 2.0, "speed": 0.4}
+    ],
+    "impact": [
+      {"type": "flash", "color": "#FFFFFF", "duration": 1, "fade": 3},
+      {"type": "shake", "strength": 0.7, "duration": 8},
+      {"type": "sound", "id": "skysdomains:collapse.planet_impact", "volume": 2.0, "pitch": 1.0, "at": "event"},
+      {"type": "particles", "particle": "minecraft:explosion_emitter", "count": 1, "area": "event", "spread": 0.5, "speed": 0.0},
+      {"type": "particles", "particle": "minecraft:flame", "count": 40, "area": "event", "spread": 2.0, "speed": 0.3},
+      {"type": "impact_frame", "texture": "frame_02", "duration": 2, "every_nth": 3}
+    ],
+    "sun_launch": [
+      {"type": "sound", "id": "skysdomains:collapse.white_hole", "volume": 1.4, "pitch": 0.6, "at": "center"},
+      {"type": "shake", "strength": 0.4, "duration": 30},
+      {"type": "fov_punch", "delta": 6, "duration": 30, "easing": "ease_out_quad"},
+      {"type": "spawn", "id": "sun", "kind": "sphere", "texture": "skysdomains:scene/sun", "pos": [0.0, 0.45, 0.0], "relative_to_radius": true, "scale": 2.2, "color": "#FFFFFF", "spin": 2.0, "emissive": true}
+    ],
+    "sun_impact": [
+      {"type": "impact_frame", "texture": "frame_01", "duration": 3},
+      {"type": "flash", "color": "#FFFFFF", "duration": 2, "fade": 5},
+      {"type": "invert", "duration": 2},
+      {"type": "shake", "strength": 1.5, "duration": 20},
+      {"type": "sound", "id": "skysdomains:collapse.sun_impact", "volume": 2.5, "pitch": 0.7, "at": "event"},
+      {"type": "particles", "particle": "minecraft:explosion_emitter", "count": 4, "area": "event", "spread": 3.0, "speed": 0.0},
+      {"type": "particles", "particle": "minecraft:flame", "count": 120, "area": "event", "spread": 6.0, "speed": 0.5}
+    ],
+    "clash": [
+      {"type": "impact_frame", "texture": "frame_02", "duration": 2},
+      {"type": "shake", "strength": 1.2, "duration": 14}
+    ]
+  }
+}

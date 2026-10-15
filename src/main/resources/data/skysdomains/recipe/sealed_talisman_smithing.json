@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": "skysdomains:sealing_template",
+  "base": "skysdomains:fractured_talisman",
+  "addition": "skysdomains:sealing_catalyst",
+  "result": {
+    "id": "skysdomains:sealed_talisman"
+  }
+}

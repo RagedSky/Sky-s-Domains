@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "skysdomains:void_crystal",
+    "skysdomains:void_crystal",
+    "minecraft:nether_star"
+  ],
+  "result": {
+    "id": "skysdomains:absolute_catalyst"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SES",
+    "DFD"
+  ],
+  "key": {
+    "S": "skysdomains:abyssal_shard",
+    "E": "minecraft:end_crystal",
+    "D": "skysdomains:arcane_dust",
+    "F": "skysdomains:cursed_fragment"
+  },
+  "result": {
+    "id": "skysdomains:collapse_sigil"
+  }
+}

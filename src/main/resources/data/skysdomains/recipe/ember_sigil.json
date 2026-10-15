@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "BMB",
+    "DFD",
+    "B B"
+  ],
+  "key": {
+    "B": "minecraft:blaze_powder",
+    "M": "minecraft:magma_cream",
+    "D": "skysdomains:arcane_dust",
+    "F": "minecraft:fire_charge"
+  },
+  "result": {
+    "id": "skysdomains:ember_sigil"
+  }
+}

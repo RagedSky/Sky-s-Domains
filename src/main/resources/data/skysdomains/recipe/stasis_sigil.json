@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "ACA",
+    "DSD",
+    "A A"
+  ],
+  "key": {
+    "A": "minecraft:amethyst_shard",
+    "C": "minecraft:clock",
+    "D": "skysdomains:arcane_dust",
+    "S": "skysdomains:abyssal_shard"
+  },
+  "result": {
+    "id": "skysdomains:stasis_sigil"
+  }
+}

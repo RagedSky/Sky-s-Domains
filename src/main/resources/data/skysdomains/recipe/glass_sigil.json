@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "GAG",
+    "DID",
+    "GAG"
+  ],
+  "key": {
+    "G": "minecraft:glass",
+    "A": "minecraft:amethyst_shard",
+    "D": "skysdomains:arcane_dust",
+    "I": "minecraft:gold_ingot"
+  },
+  "result": {
+    "id": "skysdomains:glass_sigil"
+  }
+}

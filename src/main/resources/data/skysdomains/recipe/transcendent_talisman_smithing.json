@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": "skysdomains:transcendent_template",
+  "base": "skysdomains:absolute_talisman",
+  "addition": "skysdomains:transcendent_catalyst",
+  "result": {
+    "id": "skysdomains:transcendent_talisman"
+  }
+}

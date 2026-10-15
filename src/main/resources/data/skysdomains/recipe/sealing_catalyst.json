@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "skysdomains:abyssal_shard",
+    "skysdomains:abyssal_shard",
+    "skysdomains:cursed_fragment"
+  ],
+  "result": {
+    "id": "skysdomains:sealing_catalyst"
+  }
+}

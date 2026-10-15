@@ -1,0 +1,18 @@
+pluginManagement {
+	repositories {
+		maven {
+			name = 'Fabric'
+			url = 'https://maven.fabricmc.net/'
+		}
+		// Google-hosted mirror of Maven Central (the primary host rate-limits some build environments).
+		maven {
+			name = 'MavenCentralMirror'
+			url = 'https://maven-central.storage-download.googleapis.com/maven2/'
+		}
+		mavenCentral()
+		gradlePluginPortal()
+	}
+}
+
+// Should match your modid
+rootProject.name = 'skysdomains'
