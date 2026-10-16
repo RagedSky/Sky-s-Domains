@@ -34,37 +34,6 @@
             "easing": "ease_out_quad"
           },
           {
-            "type": "spawn",
-            "id": "clock",
-            "kind": "ring",
-            "texture": "skysdomains:scene/clock_face",
-            "pos": [
-              0.0,
-              0.6,
-              0.0
-            ],
-            "relative_to_radius": true,
-            "scale": 0.5,
-            "alpha": 0.8,
-            "spin": 6.0
-          },
-          {
-            "type": "move",
-            "id": "clock",
-            "scale": 0.5,
-            "duration": 1
-          },
-          {
-            "type": "spawn",
-            "id": "clock_glow",
-            "kind": "billboard",
-            "texture": "skysdomains:scene/glow_soft",
-            "follow": "clock",
-            "scale": 4.0,
-            "color": "#E0E0E8",
-            "alpha": 0.35
-          },
-          {
             "type": "particles",
             "particle": "minecraft:dust",
             "count": 250,
@@ -89,6 +58,80 @@
             "area": "column",
             "speed": 0.2,
             "spread": 2.0
+          },
+          {
+            "type": "spawn",
+            "id": "clock",
+            "kind": "ring",
+            "texture": "skysdomains:scene/clock_dial",
+            "pos": [
+              0,
+              0.08,
+              0
+            ],
+            "scale": 0.0,
+            "alpha": 0.95,
+            "spin": 0.0,
+            "emissive": true
+          },
+          {
+            "type": "spawn",
+            "id": "clock_hands",
+            "kind": "ring",
+            "texture": "skysdomains:scene/clock_hands",
+            "follow": "clock",
+            "offset": [
+              0,
+              0.04,
+              0
+            ],
+            "scale": 0.0,
+            "alpha": 1.0,
+            "spin": 9.0,
+            "emissive": true
+          },
+          {
+            "type": "spawn",
+            "id": "clock_glow",
+            "kind": "billboard",
+            "texture": "skysdomains:scene/glow_soft",
+            "pos": [
+              0,
+              0.6,
+              0
+            ],
+            "scale": 0.0,
+            "color": "#E0E0E8",
+            "alpha": 0.35
+          },
+          {
+            "type": "move",
+            "id": "clock",
+            "pos": [
+              0,
+              0.08,
+              0
+            ],
+            "scale": 0.92,
+            "relative_to_radius": true,
+            "duration": 24,
+            "easing": "ease_out_back"
+          },
+          {
+            "type": "move",
+            "id": "clock_hands",
+            "scale": 0.92,
+            "relative_to_radius": true,
+            "duration": 24,
+            "easing": "ease_out_back"
+          },
+          {
+            "type": "move",
+            "id": "clock_glow",
+            "scale": 1.4,
+            "relative_to_radius": true,
+            "duration": 24,
+            "easing": "ease_out_quad"
           }
         ]
       },
@@ -179,12 +222,6 @@
             "_comment": "released automatically when the domain closes"
           },
           {
-            "type": "move",
-            "id": "clock",
-            "spin": 0.0,
-            "duration": 1
-          },
-          {
             "type": "sound",
             "id": "skysdomains:stasis.impact",
             "volume": 1.2,
@@ -194,6 +231,12 @@
             "type": "post_shader",
             "name": "chromatic",
             "duration": 4
+          },
+          {
+            "type": "move",
+            "id": "clock_hands",
+            "spin": 0.0,
+            "duration": 1
           }
         ]
       }
@@ -241,14 +284,6 @@
             "easing": "ease_in_cubic"
           },
           {
-            "type": "move",
-            "id": "clock",
-            "spin": 12.0,
-            "scale": 0.0,
-            "duration": 14,
-            "easing": "ease_in_cubic"
-          },
-          {
             "type": "impact_frame",
             "texture": "frame_01",
             "duration": 2,
@@ -277,6 +312,21 @@
             "area": "shell",
             "speed": 0.2,
             "spread": 1.0
+          },
+          {
+            "type": "move",
+            "id": "clock_hands",
+            "spin": 25.0,
+            "scale": 0.0,
+            "duration": 14,
+            "easing": "ease_in_cubic"
+          },
+          {
+            "type": "move",
+            "id": "clock",
+            "scale": 0.0,
+            "duration": 14,
+            "easing": "ease_in_cubic"
           }
         ]
       },

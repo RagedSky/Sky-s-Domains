@@ -3,7 +3,7 @@
 	"package": "dev.sky.skysdomains.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"mixins": [
-		"EntityTickFreezeMixin",
+		"ServerLevelFreezeMixin",
 		"AnvilMenuRefinementMixin"
 	],
 	"injectors": {

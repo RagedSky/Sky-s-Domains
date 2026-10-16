@@ -19,8 +19,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Time freeze. Frozen entities skip {@code Entity#tick()} entirely (mixin), so there is no AI,
- * movement, gravity or attack. The server owns the authoritative set per dimension and mirrors
+ * Time freeze. Frozen entities are skipped by the level's {@code tickNonPassenger} (mixins on
+ * ServerLevel and ClientLevel), so there is no AI, movement, gravity or attack. The server owns the authoritative set per dimension and mirrors
  * it to nearby clients so animations stop there as well.
  */
 public final class FreezeManager {
@@ -31,7 +31,7 @@ public final class FreezeManager {
 	private FreezeManager() {
 	}
 
-	/** Called from the {@code Entity#tick} mixin on both sides. */
+	/** Called from the level tick mixins on both sides. */
 	public static boolean shouldSkipTick(Entity entity) {
 		if (entity.isRemoved()) return false;
 		if (entity instanceof LivingEntity living && living.isDeadOrDying()) return false;
