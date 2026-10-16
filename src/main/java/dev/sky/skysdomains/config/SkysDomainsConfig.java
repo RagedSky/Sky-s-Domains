@@ -74,6 +74,10 @@ public class SkysDomainsConfig {
 		public EmberGarden emberGarden = new EmberGarden();
 		public Stasis stasis = new Stasis();
 		public StructuralCollapse structuralCollapse = new StructuralCollapse();
+		/** Blocks Ember Garden / Frost Vault never replace (bedrock, containers and unbreakable blocks are skipped anyway). */
+		public java.util.List<String> groundBlacklist = new java.util.ArrayList<>(java.util.List.of(
+				"minecraft:obsidian", "minecraft:crying_obsidian", "minecraft:reinforced_deepslate", "minecraft:spawner",
+				"minecraft:end_portal_frame", "minecraft:command_block", "minecraft:barrier"));
 	}
 
 	public static class FrostVault {
@@ -88,6 +92,16 @@ public class SkysDomainsConfig {
 		public boolean convertLavaToObsidian = true;
 		/** Radius multiplier applied to the tier radius. */
 		public double radiusMultiplier = 1.0;
+		/** Freeze the floor inside the sphere into ice / packed ice / blue ice while open (always thawed back). */
+		public boolean freezeGround = true;
+		/** Ice stalagmites shooting out of the frozen floor (needs freezeGround). */
+		public boolean iceSpikes = true;
+		/** Share of floor columns that try to grow a spike (0..1); big ones keep extra spacing. */
+		public double spikeDensity = 0.07;
+		/** Tallest spike in blocks (2..12). */
+		public int maxSpikeHeight = 8;
+		/** Ticks until the frost has reached the full radius. */
+		public int spreadTicks = 45;
 	}
 
 	public static class UmbralSea {
@@ -122,10 +136,6 @@ public class SkysDomainsConfig {
 		public int spreadTicks = 60;
 		/** Damage enemies take per step on the infected ground (fire damage, they also catch fire). */
 		public float groundDamage = 1.0F;
-		/** Blocks that are never replaced (bedrock, containers and unbreakable blocks are skipped anyway). */
-		public java.util.List<String> groundBlacklist = new java.util.ArrayList<>(java.util.List.of(
-				"minecraft:obsidian", "minecraft:crying_obsidian", "minecraft:reinforced_deepslate", "minecraft:spawner",
-				"minecraft:end_portal_frame", "minecraft:command_block", "minecraft:barrier"));
 	}
 
 	public static class Stasis {

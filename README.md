@@ -75,7 +75,7 @@ written book with all recipes, drops and domain descriptions in German and Engli
 
 | Domain | Effect |
 |---|---|
-| **Frost Vault** | Enemies freeze fast (powder-snow style) and get Slowness; fully frozen enemies take freeze damage. Water → ice, lava → obsidian. Owner never freezes. |
+| **Frost Vault** | Enemies freeze fast, get Slowness and take frost damage once fully frozen; water turns to ice, lava to obsidian. The floor freezes over from the centre outwards into ice, packed ice and blue ice with snow dusting, and ice spikes grow out of the ground like stalagmites in different sizes. Everything is journaled and thawed back when the vault closes. |
 | **Umbral Sea** | Darkness for everyone but the owner, enemies are pulled to the centre and "drown in shadows" there (armour-ignoring magic damage). |
 | **Glass Heaven** | Owner: Resistance II + Regeneration II; enemies: Weakness II; hostile projectiles shatter on the sphere. Pure defence, longer duration. |
 | **Ember Garden** | The floor is infected from the centre outwards: scorched ground with glowing cracks, molten ground and small lava pools. Enemies take fire damage per second and are scorched by every step; the owner is immune to fire and lava. Every replaced block is journaled and restored when the domain closes (also after a crash or server stop). |
@@ -102,10 +102,11 @@ The file is rewritten on every start so new options appear automatically.
 | `energy.max`, `energy.regenPerSecond`, `energy.regenDelaySeconds` | Energy pool, regeneration, pause after an activation. |
 | `tiers.<fractured/sealed/absolute/transcendent>` | `radius`, `durationSeconds`, `cooldownSeconds`, `regenMultiplier` (while in the offhand), `energyCost`. |
 | `refinementBonus` | Radius/duration bonus per refinement (0.10 = +10 %). |
-| `domains.frostVault` | `freezeTicksPerTick[4]`, `freezeDamagePerSecond[4]`, `slownessAmplifier[4]`, `convertWaterToIce`, `convertLavaToObsidian`, `radiusMultiplier`, `durationMultiplier`. |
+| `domains.frostVault` | `freezeTicksPerTick[4]`, `freezeDamagePerSecond[4]`, `slownessAmplifier[4]`, `convertWaterToIce`, `convertLavaToObsidian`, `radiusMultiplier`, `durationMultiplier`, `freezeGround` (ice floor, default true), `iceSpikes` (stalagmites, default true), `spikeDensity` (0..1, default 0.07), `maxSpikeHeight` (default 8), `spreadTicks` (default 45). |
 | `domains.umbralSea` | `pullStrength[4]`, `centerDamagePerSecond[4]`, `centerRadius`, `darknessForOtherPlayers`. |
 | `domains.glassHeaven` | `resistanceAmplifier`, `regenerationAmplifier`, `weaknessAmplifier`, `shatterProjectiles`, `durationMultiplier`. |
-| `domains.emberGarden` | `fireDamagePerSecond[4]`, `radiusMultiplier`, `durationMultiplier`, `infectGround` (turn the floor into scorched/molten ground, default true), `lavaPools` (small lava pools near the centre, default true), `spreadTicks` (ticks until the infection reaches the rim, default 60), `groundDamage` (per step for enemies), `groundBlacklist` (block ids never replaced; unbreakable blocks and containers are skipped anyway). |
+| `domains.emberGarden` | `fireDamagePerSecond[4]`, `radiusMultiplier`, `durationMultiplier`, `infectGround` (turn the floor into scorched/molten ground, default true), `lavaPools` (small lava pools near the centre, default true), `spreadTicks` (ticks until the infection reaches the rim, default 60), `groundDamage` (per step for enemies). |
+| `domains.groundBlacklist` | Block ids Ember Garden and Frost Vault never replace (unbreakable blocks, containers and bedrock are skipped anyway). |
 | `domains.stasis` | `freezePlayers`, `deleteProjectiles`, `radiusMultiplier`, `durationMultiplier`. |
 | `domains.structuralCollapse` | `planetsPerTier[4]`, `sunAtTier4`, `explosionPower{mercury…neptune}`, `sunExplosionPower`, `blockDamage`, `impactIntervalTicks`, `planetFlightTicks`, phase lengths `activationTicks`, `expandTicks`, `solarSystemTicks`, `collapseTicks`, `endTicks`. |
 | `targeting` | `playersAreEnemies`, `respectTeams`, `onlyHostileMobs`, `spareOwnPets`. |

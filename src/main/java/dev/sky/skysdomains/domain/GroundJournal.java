@@ -23,31 +23,33 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
- * Journal of every block Ember Garden replaced, so the ground can always be restored: on domain
- * close, on server stop, and (via a persistent level attachment) after a crash or an unloaded
- * chunk. Entries are keyed by position; the stored state is the original block.
+ * Journal of every block a domain replaced in the world (Ember Garden ground, Frost Vault ice
+ * floor and spikes), so the world can always be put back: on domain close, on server stop, and
+ * (via a persistent level attachment) after a crash or when a chunk was unloaded meanwhile.
  */
-public final class EmberGround {
-	public record Entry(BlockPos pos, BlockState original) {
+public final class GroundJournal {
+	/** {@code placed} is the block the domain put there (so melted ice = water is still recognised as ours). */
+	public record Entry(BlockPos pos, BlockState original, Optional<BlockState> placed) {
 		public static final Codec<Entry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
 				BlockPos.CODEC.fieldOf("pos").forGetter(Entry::pos),
-				BlockState.CODEC.fieldOf("original").forGetter(Entry::original)
+				BlockState.CODEC.fieldOf("original").forGetter(Entry::original),
+				BlockState.CODEC.optionalFieldOf("placed").forGetter(Entry::placed)
 		).apply(instance, Entry::new));
 	}
 
-	/** Persistent per-level journal (written back whenever it changed, before the level is saved). */
-	public static final AttachmentType<List<Entry>> JOURNAL = AttachmentRegistry.create(SkysDomains.id("ember_ground"), builder -> builder
+	public static final AttachmentType<List<Entry>> JOURNAL = AttachmentRegistry.create(SkysDomains.id("ground_journal"), builder -> builder
 			.initializer(List::of)
 			.persistent(Entry.CODEC.listOf()));
 
 	private static final Map<ResourceKey<Level>, Map<Long, Entry>> LIVE = new HashMap<>();
 	private static final Map<ResourceKey<Level>, Boolean> DIRTY = new HashMap<>();
-	/** Leftovers found in the journal on level load, restored as soon as their chunks are loaded. */
+	/** Entries found in the journal on level load, restored as soon as their chunks are loaded. */
 	private static final Map<ResourceKey<Level>, List<Entry>> LEFTOVERS = new HashMap<>();
 
-	private EmberGround() {
+	private GroundJournal() {
 	}
 
 	public static void register() {
@@ -57,7 +59,7 @@ public final class EmberGround {
 			DIRTY.put(level.dimension(), false);
 			if (!stored.isEmpty()) {
 				LEFTOVERS.put(level.dimension(), new ArrayList<>(stored));
-				SkysDomains.LOGGER.info("Ember Garden: {} ground blocks in {} were not restored last time, restoring", stored.size(), level.dimension().identifier());
+				SkysDomains.LOGGER.info("{} domain blocks in {} were not restored last time, restoring", stored.size(), level.dimension().identifier());
 			}
 		});
 		ServerLevelEvents.UNLOAD.register((server, level) -> {
@@ -77,11 +79,15 @@ public final class EmberGround {
 
 	// --- journal ----------------------------------------------------------------------------
 
-	/** Remembers the original block at {@code pos} (only the first time; later changes keep the first original). */
-	public static void record(ServerLevel level, BlockPos pos, BlockState original) {
+	/** Replaces the block at {@code pos}, remembering the original (only the first time for a position). */
+	public static void place(ServerLevel level, BlockPos pos, BlockState replacement) {
 		Map<Long, Entry> map = LIVE.computeIfAbsent(level.dimension(), k -> new LinkedHashMap<>());
-		map.putIfAbsent(pos.asLong(), new Entry(pos.immutable(), original));
+		BlockState original = level.getBlockState(pos);
+		Entry existing = map.get(pos.asLong());
+		// Keep the very first original, but remember the latest thing we placed (plant -> air -> snow).
+		map.put(pos.asLong(), new Entry(pos.immutable(), existing == null ? original : existing.original(), Optional.of(replacement)));
 		DIRTY.put(level.dimension(), true);
+		level.setBlock(pos, replacement, Block.UPDATE_ALL);
 	}
 
 	public static boolean isRecorded(ServerLevel level, BlockPos pos) {
@@ -90,8 +96,8 @@ public final class EmberGround {
 	}
 
 	/**
-	 * Puts the original block back if the position still holds something Ember Garden created
-	 * (or air, e.g. a removed plant). Player-placed blocks are left alone. Always forgets the entry.
+	 * Puts the original block back if the position still holds what the domain placed (or air,
+	 * or water from melted ice). Player-placed blocks are left alone. Always forgets the entry.
 	 */
 	public static void restore(ServerLevel level, BlockPos pos) {
 		Map<Long, Entry> map = LIVE.get(level.dimension());
@@ -109,23 +115,40 @@ public final class EmberGround {
 		List<Entry> entries = new ArrayList<>(map.values());
 		map.clear();
 		DIRTY.put(level.dimension(), true);
-		// Lower blocks first so plants find their support block again.
-		entries.sort((a, b) -> Integer.compare(a.pos().getY(), b.pos().getY()));
-		for (Entry entry : entries) applyRestore(level, entry);
+		restoreSorted(level, entries);
 		flush(level);
+	}
+
+	/** Spikes top-down (nothing left floating), then floors bottom-up (plants find their support). */
+	private static void restoreSorted(ServerLevel level, List<Entry> entries) {
+		List<Entry> toAir = new ArrayList<>();
+		List<Entry> toBlock = new ArrayList<>();
+		for (Entry entry : entries) (entry.original().isAir() ? toAir : toBlock).add(entry);
+		toAir.sort((a, b) -> Integer.compare(b.pos().getY(), a.pos().getY()));
+		toBlock.sort((a, b) -> Integer.compare(a.pos().getY(), b.pos().getY()));
+		for (Entry entry : toAir) applyRestore(level, entry);
+		for (Entry entry : toBlock) applyRestore(level, entry);
 	}
 
 	private static void applyRestore(ServerLevel level, Entry entry) {
 		if (!level.isLoaded(entry.pos())) return;
 		BlockState current = level.getBlockState(entry.pos());
-		if (isOurs(current) || current.isAir()) {
+		boolean ours = current.isAir() || isDomainBlock(current)
+				|| entry.placed().map(placed -> placed.is(current.getBlock())).orElse(false)
+				|| (current.is(Blocks.WATER) && entry.placed().map(GroundJournal::isMeltable).orElse(false));
+		if (ours) {
 			level.setBlock(entry.pos(), entry.original(), Block.UPDATE_ALL);
 		}
 	}
 
-	public static boolean isOurs(BlockState state) {
+	/** Blocks that only domains place in this mod's context (and vanilla by-products of them). */
+	public static boolean isDomainBlock(BlockState state) {
 		return state.is(ModBlocks.SCORCHED_GROUND) || state.is(ModBlocks.MOLTEN_GROUND)
 				|| state.is(Blocks.LAVA) || state.is(Blocks.FIRE);
+	}
+
+	private static boolean isMeltable(BlockState placed) {
+		return placed.is(Blocks.ICE) || placed.is(Blocks.FROSTED_ICE);
 	}
 
 	private static void flush(ServerLevel level) {
@@ -148,16 +171,17 @@ public final class EmberGround {
 	private static void restoreLeftovers(ServerLevel level) {
 		List<Entry> leftovers = LEFTOVERS.get(level.dimension());
 		if (leftovers == null || leftovers.isEmpty()) return;
-		leftovers.sort((a, b) -> Integer.compare(a.pos().getY(), b.pos().getY()));
+		List<Entry> ready = new ArrayList<>();
 		Iterator<Entry> iterator = leftovers.iterator();
-		boolean changed = false;
 		while (iterator.hasNext()) {
 			Entry entry = iterator.next();
 			if (!level.isLoaded(entry.pos())) continue;
-			applyRestore(level, entry);
+			ready.add(entry);
 			iterator.remove();
-			changed = true;
 		}
-		if (changed) DIRTY.put(level.dimension(), true);
+		if (!ready.isEmpty()) {
+			restoreSorted(level, ready);
+			DIRTY.put(level.dimension(), true);
+		}
 	}
 }
