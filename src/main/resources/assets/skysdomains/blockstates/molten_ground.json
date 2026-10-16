@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "": [
+      { "model": "skysdomains:block/molten_ground" },
+      { "model": "skysdomains:block/molten_ground", "y": 90 },
+      { "model": "skysdomains:block/molten_ground", "y": 180 },
+      { "model": "skysdomains:block/molten_ground", "y": 270 }
+    ]
+  }
+}

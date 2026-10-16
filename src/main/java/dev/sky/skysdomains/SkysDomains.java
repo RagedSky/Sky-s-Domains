@@ -9,6 +9,7 @@ import dev.sky.skysdomains.common.ModSounds;
 import dev.sky.skysdomains.common.ModWorldgen;
 import dev.sky.skysdomains.config.ConfigManager;
 import dev.sky.skysdomains.domain.DomainManager;
+import dev.sky.skysdomains.domain.EmberGround;
 import dev.sky.skysdomains.domain.EnergyManager;
 import dev.sky.skysdomains.network.ModNetworking;
 import net.fabricmc.api.ModInitializer;
@@ -41,6 +42,7 @@ public final class SkysDomains implements ModInitializer {
 		ModNetworking.registerCommon();
 		EnergyManager.register();
 		DomainManager.register();
+		EmberGround.register();
 
 		LOGGER.info("Sky's Domains initialised ({} domains, {} talisman tiers)", DomainType.values().length, TalismanTier.values().length);
 	}

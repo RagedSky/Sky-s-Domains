@@ -58,6 +58,16 @@ public final class DomainManager {
 	public static void register() {
 		ServerTickEvents.END_LEVEL_TICK.register(DomainManager::tickLevel);
 		ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
+			// Close every domain properly so effects undo their world changes before the levels are saved.
+			for (List<ActiveDomain> list : DOMAINS.values()) {
+				for (ActiveDomain domain : list) {
+					if (!domain.finished) {
+						domain.collapsed = true;
+						domain.finished = true;
+						close(domain);
+					}
+				}
+			}
 			DOMAINS.clear();
 			FreezeManager.clearServer();
 		});

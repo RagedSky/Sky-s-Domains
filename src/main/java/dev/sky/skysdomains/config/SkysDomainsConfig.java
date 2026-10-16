@@ -114,6 +114,18 @@ public class SkysDomainsConfig {
 		public double durationMultiplier = 1.0;
 		public float[] fireDamagePerSecond = {1.5F, 2.5F, 3.5F, 5.0F};
 		public double radiusMultiplier = 1.0;
+		/** Turn the floor inside the sphere into scorched/molten ground while the domain is open (always restored). */
+		public boolean infectGround = true;
+		/** Small lava pools near the centre (only with infectGround). */
+		public boolean lavaPools = true;
+		/** Ticks until the infection has reached the full radius. */
+		public int spreadTicks = 60;
+		/** Damage enemies take per step on the infected ground (fire damage, they also catch fire). */
+		public float groundDamage = 1.0F;
+		/** Blocks that are never replaced (bedrock, containers and unbreakable blocks are skipped anyway). */
+		public java.util.List<String> groundBlacklist = new java.util.ArrayList<>(java.util.List.of(
+				"minecraft:obsidian", "minecraft:crying_obsidian", "minecraft:reinforced_deepslate", "minecraft:spawner",
+				"minecraft:end_portal_frame", "minecraft:command_block", "minecraft:barrier"));
 	}
 
 	public static class Stasis {

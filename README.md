@@ -78,7 +78,7 @@ written book with all recipes, drops and domain descriptions in German and Engli
 | **Frost Vault** | Enemies freeze fast (powder-snow style) and get Slowness; fully frozen enemies take freeze damage. Water → ice, lava → obsidian. Owner never freezes. |
 | **Umbral Sea** | Darkness for everyone but the owner, enemies are pulled to the centre and "drown in shadows" there (armour-ignoring magic damage). |
 | **Glass Heaven** | Owner: Resistance II + Regeneration II; enemies: Weakness II; hostile projectiles shatter on the sphere. Pure defence, longer duration. |
-| **Ember Garden** | Burning ground (visual), fire damage per second, owner immune to fire and lava. |
+| **Ember Garden** | The floor is infected from the centre outwards: scorched ground with glowing cracks, molten ground and small lava pools. Enemies take fire damage per second and are scorched by every step; the owner is immune to fire and lava. Every replaced block is journaled and restored when the domain closes (also after a crash or server stop). |
 | **Stasis** | All projectiles inside are deleted, mobs do not tick (no AI, movement, gravity, attacks). Players move freely (configurable). |
 | **Structural Collapse** | Time freeze, the sky becomes space, a solar system appears, collapses into a white hole, and the planets are thrown at the frozen enemies (3/4/6/8 planets per tier; tier 4 ends with the sun). Explosion damage only, block damage optional. |
 
@@ -105,7 +105,7 @@ The file is rewritten on every start so new options appear automatically.
 | `domains.frostVault` | `freezeTicksPerTick[4]`, `freezeDamagePerSecond[4]`, `slownessAmplifier[4]`, `convertWaterToIce`, `convertLavaToObsidian`, `radiusMultiplier`, `durationMultiplier`. |
 | `domains.umbralSea` | `pullStrength[4]`, `centerDamagePerSecond[4]`, `centerRadius`, `darknessForOtherPlayers`. |
 | `domains.glassHeaven` | `resistanceAmplifier`, `regenerationAmplifier`, `weaknessAmplifier`, `shatterProjectiles`, `durationMultiplier`. |
-| `domains.emberGarden` | `fireDamagePerSecond[4]`, `radiusMultiplier`, `durationMultiplier`. |
+| `domains.emberGarden` | `fireDamagePerSecond[4]`, `radiusMultiplier`, `durationMultiplier`, `infectGround` (turn the floor into scorched/molten ground, default true), `lavaPools` (small lava pools near the centre, default true), `spreadTicks` (ticks until the infection reaches the rim, default 60), `groundDamage` (per step for enemies), `groundBlacklist` (block ids never replaced; unbreakable blocks and containers are skipped anyway). |
 | `domains.stasis` | `freezePlayers`, `deleteProjectiles`, `radiusMultiplier`, `durationMultiplier`. |
 | `domains.structuralCollapse` | `planetsPerTier[4]`, `sunAtTier4`, `explosionPower{mercury…neptune}`, `sunExplosionPower`, `blockDamage`, `impactIntervalTicks`, `planetFlightTicks`, phase lengths `activationTicks`, `expandTicks`, `solarSystemTicks`, `collapseTicks`, `endTicks`. |
 | `targeting` | `playersAreEnemies`, `respectTeams`, `onlyHostileMobs`, `spareOwnPets`. |

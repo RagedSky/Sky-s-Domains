@@ -757,6 +757,26 @@
             "text": "",
             "extra": [
               {
+                "translate": "book.skysdomains.d_ember.title",
+                "bold": true,
+                "color": "dark_purple"
+              },
+              {
+                "text": " (2)",
+                "color": "dark_purple"
+              },
+              {
+                "text": "\n\n"
+              },
+              {
+                "translate": "book.skysdomains.d_ember.body.2"
+              }
+            ]
+          },
+          {
+            "text": "",
+            "extra": [
+              {
                 "translate": "book.skysdomains.d_stasis.title",
                 "bold": true,
                 "color": "dark_purple"

@@ -11,6 +11,8 @@ own PNG of the same name; keep the aspect ratio. Paths are relative to `src/main
 | `textures/block/arcane_ore.png` | 16×16 | 16×16 block face (tiles) |
 | `textures/block/deepslate_arcane_ore.png` | 16×16 | 16×16 block face (tiles) |
 | `textures/block/void_ore.png` | 16×16 | 16×16 block face (tiles) |
+| `textures/block/scorched_ground.png` (+ `.mcmeta`) | 64×512 | Ember Garden ground, 8 animated frames stacked vertically (glowing cracks pulse); regenerate with `tools/generate_ground.py` |
+| `textures/block/molten_ground.png` (+ `.mcmeta`) | 64×512 | Ember Garden magma-like ground, 8 animated frames; regenerate with `tools/generate_ground.py` |
 | `textures/impact/ember_garden/frame_01.png` | 2560×1440 | 16:9 full-screen frame, covers the screen with letterbox bars; regenerate with `tools/generate_art.py --frames 2160` for 4K |
 | `textures/impact/ember_garden/frame_02.png` | 2560×1440 | 16:9 full-screen frame, covers the screen with letterbox bars; regenerate with `tools/generate_art.py --frames 2160` for 4K |
 | `textures/impact/ember_garden/frame_03.png` | 2560×1440 | 16:9 full-screen frame, covers the screen with letterbox bars; regenerate with `tools/generate_art.py --frames 2160` for 4K |
