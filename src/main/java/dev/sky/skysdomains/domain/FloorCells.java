@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The floor of a domain: for every column inside the sphere (near the owner's height) the top
- * solid block that has free space above it. Sorted by jittered distance from the centre so an
+ * The floor of a domain: for every column inside the sphere the highest solid block (inside the
+ * sphere) that has free space above it. Sorted by jittered distance from the centre so an
  * effect can "spread" over the floor with an irregular front. Shared by Ember Garden and Frost Vault.
  */
 public final class FloorCells {
@@ -35,8 +35,8 @@ public final class FloorCells {
 		int cx = (int) Math.floor(domain.center.x);
 		int cy = (int) Math.floor(domain.center.y);
 		int cz = (int) Math.floor(domain.center.z);
-		int up = Math.min(r, 4);
-		int down = Math.min(r, 10);
+		int up = r;   // the whole sphere: the owner may hover above the ground or stand on a ledge
+		int down = r;
 		long seed = domain.id.getLeastSignificantBits();
 		BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
 		for (int dx = -r; dx <= r; dx++) {
@@ -50,7 +50,7 @@ public final class FloorCells {
 					BlockState state = level.getBlockState(pos);
 					if (!isFloorCandidate(level, pos, state)) continue;
 					BlockState above = level.getBlockState(pos.above());
-					if (above.isCollisionShapeFullBlock(level, pos.above()) || above.liquid()) break; // buried
+					if (isSolidCover(level, pos.above(), above)) break; // buried, not a floor
 					double horizontal = Math.sqrt(dx * dx + dz * dz);
 					long hash = mix(seed ^ pos.asLong());
 					double jitter = ((hash >>> 40) & 0xFF) / 255.0 * 2.2 - 1.1;
@@ -61,6 +61,7 @@ public final class FloorCells {
 			}
 		}
 		cells.sort((a, b) -> Double.compare(a.distance(), b.distance()));
+		dev.sky.skysdomains.SkysDomains.debug("Floor scan: {} columns inside radius {} around {} (y {}..{})", cells.size(), domain.radius, domain.center, cy - down, cy + up);
 	}
 
 	public int size() {
@@ -93,10 +94,18 @@ public final class FloorCells {
 		return true;
 	}
 
-	/** A full, breakable, container-free solid block that is not on the config blacklist. */
+	/** Something that hides the block below it: a full solid block or liquid (tree canopies do not count). */
+	private static boolean isSolidCover(ServerLevel level, BlockPos pos, BlockState state) {
+		if (state.liquid()) return true;
+		if (state.is(BlockTags.LEAVES)) return false;
+		return state.isCollisionShapeFullBlock(level, pos);
+	}
+
+	/** A full, breakable, container-free solid block that is not on the config blacklist (trees are left alone). */
 	public static boolean isFloorCandidate(ServerLevel level, BlockPos pos, BlockState state) {
 		if (state.isAir() || state.liquid() || !state.getFluidState().isEmpty()) return false;
 		if (!state.isCollisionShapeFullBlock(level, pos)) return false;
+		if (state.is(BlockTags.LEAVES) || state.is(BlockTags.LOGS)) return false;
 		if (state.hasBlockEntity()) return false;
 		if (state.getDestroySpeed(level, pos) < 0.0F) return false;
 		if (state.is(BlockTags.FEATURES_CANNOT_REPLACE) || state.is(BlockTags.WITHER_IMMUNE)) return false;

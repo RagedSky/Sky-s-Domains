@@ -97,7 +97,7 @@ public class SkysDomainsConfig {
 		/** Ice stalagmites shooting out of the frozen floor (needs freezeGround). */
 		public boolean iceSpikes = true;
 		/** Share of floor columns that try to grow a spike (0..1); big ones keep extra spacing. */
-		public double spikeDensity = 0.07;
+		public double spikeDensity = 0.09;
 		/** Tallest spike in blocks (2..12). */
 		public int maxSpikeHeight = 8;
 		/** Ticks until the frost has reached the full radius. */

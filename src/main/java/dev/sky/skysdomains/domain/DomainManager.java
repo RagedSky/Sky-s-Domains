@@ -109,6 +109,16 @@ public final class DomainManager {
 		open(domain);
 	}
 
+	/** Opens a domain directly for {@code owner} (self-test / debugging; skips talisman, energy and cooldown checks). */
+	public static ActiveDomain openDirect(ServerPlayer owner, DomainType type, TalismanTier tier) {
+		ServerLevel level = owner.level() instanceof ServerLevel serverLevel ? serverLevel : null;
+		if (level == null) return null;
+		TalismanStats stats = TalismanStats.of(tier, type, 0);
+		ActiveDomain domain = create(level, owner, stats, owner.position(), stats.energyCost());
+		open(domain);
+		return domain;
+	}
+
 	private static void deny(ServerPlayer player, String key) {
 		player.sendOverlayMessage(Component.translatable(key));
 		player.level().playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.DENIED, SoundSource.PLAYERS, 0.8F, 1.0F);
@@ -155,8 +165,8 @@ public final class DomainManager {
 		resolveClash(domain);
 		DOMAINS.computeIfAbsent(domain.level.dimension(), k -> new ArrayList<>()).add(domain);
 		syncToPlayersInRange(domain);
-		domain.effect.onOpen(domain, domain.level);
-		domain.effect.onPhaseStart(domain, domain.level, domain.phase());
+		guarded(domain, "onOpen", () -> domain.effect.onOpen(domain, domain.level));
+		guarded(domain, "onPhaseStart", () -> domain.effect.onPhaseStart(domain, domain.level, domain.phase()));
 		SkysDomains.debug("Domain {} opened by {} at {} (tier {}, radius {})", domain.type.id(), domain.owner.getName().getString(), domain.center, domain.tier.level(), domain.radius);
 	}
 
@@ -207,11 +217,11 @@ public final class DomainManager {
 		if (domain.finished) return;
 		if (newPhase) {
 			domain.broadcast(new DomainPhasePayload(domain.id, domain.phaseIndex));
-			domain.effect.onPhaseStart(domain, domain.level, domain.phase());
+			guarded(domain, "onPhaseStart", () -> domain.effect.onPhaseStart(domain, domain.level, domain.phase()));
 		}
 		damagingDomain = domain;
 		try {
-			domain.effect.tick(domain, domain.level);
+			guarded(domain, "tick", () -> domain.effect.tick(domain, domain.level));
 		} finally {
 			damagingDomain = null;
 		}
@@ -223,7 +233,7 @@ public final class DomainManager {
 	private static void close(ActiveDomain domain) {
 		damagingDomain = domain;
 		try {
-			domain.effect.onClose(domain, domain.level, domain.collapsed);
+			guarded(domain, "onClose", () -> domain.effect.onClose(domain, domain.level, domain.collapsed));
 		} finally {
 			damagingDomain = null;
 		}
@@ -232,6 +242,15 @@ public final class DomainManager {
 		domain.broadcast(new DomainClosePayload(domain.id, domain.collapsed));
 		EnergyManager.startCooldown(domain.owner, domain.stats.cooldownTicks());
 		SkysDomains.debug("Domain {} closed (collapsed={})", domain.type.id(), domain.collapsed);
+	}
+
+	/** A bug in one effect must not kill the server tick or silently disappear in a packet task: log it loudly. */
+	private static void guarded(ActiveDomain domain, String step, Runnable action) {
+		try {
+			action.run();
+		} catch (RuntimeException e) {
+			SkysDomains.LOGGER.error("Domain {} failed in {} (tier {}, centre {}): {}", domain.type.id(), step, domain.tier.level(), domain.center, e.toString(), e);
+		}
 	}
 
 	/** Players that moved into range after the domain opened get the open packet with the current phase. */

@@ -131,7 +131,12 @@ public final class GroundJournal {
 	}
 
 	private static void applyRestore(ServerLevel level, Entry entry) {
-		if (!level.isLoaded(entry.pos())) return;
+		if (!level.isLoaded(entry.pos())) {
+			// Chunk gone meanwhile: keep the entry, it is restored when the chunk comes back.
+			LEFTOVERS.computeIfAbsent(level.dimension(), k -> new ArrayList<>()).add(entry);
+			DIRTY.put(level.dimension(), true);
+			return;
+		}
 		BlockState current = level.getBlockState(entry.pos());
 		boolean ours = current.isAir() || isDomainBlock(current)
 				|| entry.placed().map(placed -> placed.is(current.getBlock())).orElse(false)
@@ -182,6 +187,7 @@ public final class GroundJournal {
 		if (!ready.isEmpty()) {
 			restoreSorted(level, ready);
 			DIRTY.put(level.dimension(), true);
+			SkysDomains.debug("Restored {} journaled blocks in {}", ready.size(), level.dimension().identifier());
 		}
 	}
 }

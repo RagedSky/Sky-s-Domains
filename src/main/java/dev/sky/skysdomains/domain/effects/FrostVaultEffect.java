@@ -179,8 +179,14 @@ public final class FrostVaultEffect implements DomainEffect {
 		BlockPos pos = cell.floor();
 		if (!level.isLoaded(pos)) return false;
 		BlockState state = level.getBlockState(pos);
-		if (!FloorCells.isFloorCandidate(level, pos, state)) return false;
-		if (!FloorCells.clearAbove(level, pos)) return false;
+		if (!FloorCells.isFloorCandidate(level, pos, state)) {
+			dev.sky.skysdomains.SkysDomains.debug("Frost: {} at {} is no floor candidate any more", state, pos);
+			return false;
+		}
+		if (!FloorCells.clearAbove(level, pos)) {
+			dev.sky.skysdomains.SkysDomains.debug("Frost: {} above {} blocks the floor", level.getBlockState(pos.above()), pos);
+			return false;
+		}
 
 		double rel = Math.max(0.0, cell.distance()) / Math.max(1.0, domain.radius);
 		int roll = cell.roll(10, 20); // 0..1023
@@ -230,7 +236,7 @@ public final class FrostVaultEffect implements DomainEffect {
 			BlockPos base = cell.floor();
 			if (!floor.flatAround(base)) continue;
 			int sizeRoll = cell.roll(8, 30); // 0..255
-			boolean thick = sizeRoll < 40;
+			boolean thick = sizeRoll < 80;
 			int height = thick ? maxHeight / 2 + sizeRoll % (maxHeight / 2 + 1) : 2 + sizeRoll % Math.max(1, maxHeight / 2);
 			height = Math.min(height, maxHeight);
 			int spacing = thick ? 3 : 1;

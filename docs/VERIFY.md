@@ -30,3 +30,18 @@ Confirmed unchanged: `CameraRenderState.orientation` (Quaternionf), `AnvilMenu.c
 
 Dedicated-server smoke test: `./gradlew runServer` loads the mod, applies the mixins and parses all
 data (loot tables, recipes, tags, worldgen) – see the session log for the result.
+
+## Headless self-test (dedicated server, no client)
+
+`SelfTest` opens a domain for a fake player on dry land near the spawn, force-loads the chunks,
+logs what the floor looks like while the domain runs and whether everything is restored, then
+stops the server. It is only active with a system property and never in normal play:
+
+```
+JAVA_TOOL_OPTIONS="-Dskysdomains.selftest=frost_vault" ./gradlew runServer --args="nogui"
+JAVA_TOOL_OPTIONS="-Dskysdomains.selftest=ember_garden -Dskysdomains.selftest.hover=3" ./gradlew runServer --args="nogui"
+```
+
+Look for `[selftest]` lines (block counts per phase) and `failed in` lines (an effect threw).
+The fake player has no network connection, so potion-effect packets log a harmless
+NullPointerException during the Ember Garden test.

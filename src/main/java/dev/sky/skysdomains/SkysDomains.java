@@ -43,6 +43,7 @@ public final class SkysDomains implements ModInitializer {
 		EnergyManager.register();
 		DomainManager.register();
 		GroundJournal.register();
+		SelfTest.register();
 
 		LOGGER.info("Sky's Domains initialised ({} domains, {} talisman tiers)", DomainType.values().length, TalismanTier.values().length);
 	}

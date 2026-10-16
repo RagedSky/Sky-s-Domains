@@ -105,8 +105,14 @@ public final class EmberGardenEffect implements DomainEffect {
 		BlockPos pos = cell.floor();
 		if (!level.isLoaded(pos)) return false;
 		BlockState state = level.getBlockState(pos);
-		if (!FloorCells.isFloorCandidate(level, pos, state)) return false;
-		if (!FloorCells.clearAbove(level, pos)) return false;
+		if (!FloorCells.isFloorCandidate(level, pos, state)) {
+			dev.sky.skysdomains.SkysDomains.debug("Ember: {} at {} is no floor candidate any more", state, pos);
+			return false;
+		}
+		if (!FloorCells.clearAbove(level, pos)) {
+			dev.sky.skysdomains.SkysDomains.debug("Ember: {} above {} blocks the floor", level.getBlockState(pos.above()), pos);
+			return false;
+		}
 
 		double rel = Math.max(0.0, cell.distance()) / Math.max(1.0, domain.radius);
 		int roll = cell.roll(10, 20); // 0..1023
